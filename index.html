@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00174F">
+  <meta name="description" content="Sport'Pi — Le premier média dédié au sport sourd en France. Résultats, interviews, DCL, Deaflympics.">
+  <title>Sport'Pi — Le média du sport sourd</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --bg:        #00174F;
+      --bg2:       #001A5A;
+      --bg3:       #00236E;
+      --bg3h:      #002D87;
+      --blue:      #0047EE;
+      --blue-l:    #3370FF;
+      --accent:    #FF375F;
+      --accent-h:  #FF5577;
+      --txt:       #FFFFFF;
+      --txt2:      #A0B8D8;
+      --txt3:      #6A85B0;
+      --brd:       rgba(0,71,238,0.22);
+      --brd2:      rgba(0,71,238,0.48);
+      --f:         'Space Grotesk', sans-serif;
+      --fm:        'Space Mono', monospace;
+    }
+
+    /* ===== RESET ===== */
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:var(--f);background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6;}
+    a{color:inherit;text-decoration:none;}
+    button{cursor:pointer;font-family:var(--f);}
+    textarea,input{font-family:var(--f);}
+
+    /* ===== TICKER ===== */
+    .ticker{background:var(--blue);padding:7px 0;overflow:hidden;}
+    .ticker-inner{display:flex;align-items:center;}
+    .ticker-lbl{background:var(--accent);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:3px 14px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;z-index:2;}
+    .ticker-track{overflow:hidden;flex:1;}
+    .ticker-scroll{display:flex;animation:tick 35s linear infinite;white-space:nowrap;}
+    .ti{font-size:12px;font-weight:500;padding:0 40px;color:#fff;letter-spacing:.4px;}
+    @keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+    /* ===== HEADER ===== */
+    .header{background:rgba(0,23,79,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--brd);position:sticky;top:0;z-index:100;}
+    .nav{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;height:64px;gap:28px;}
+    .logo{font-size:22px;font-weight:700;letter-spacing:-.5px;flex-shrink:0;cursor:pointer;user-select:none;}
+    .logo-pi{color:var(--accent);font-size:22px;}
+    .nav-links{display:flex;align-items:center;gap:2px;flex:1;}
+    .ni{position:relative;}
+    .nl{display:flex;align-items:center;gap:4px;padding:8px 13px;font-size:14px;font-weight:500;color:var(--txt2);border-radius:6px;transition:all .2s;cursor:pointer;white-space:nowrap;background:none;border:none;}
+    .nl:hover,.nl.on{color:#fff;background:rgba(0,71,238,.14);}
+    .nl.on{color:var(--blue-l);}
+    .dd{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:8px;min-width:200px;display:none;z-index:200;box-shadow:0 20px 40px rgba(0,0,0,.45);}
+    .ni:hover .dd{display:block;}
+    .ddi{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;color:var(--txt2);border-radius:6px;cursor:pointer;transition:all .2s;}
+    .ddi:hover{background:rgba(0,71,238,.22);color:#fff;}
+    .ddi-ico{font-size:17px;}
+    /* sub-items M/F */
+    .ddi-sub{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 38px;font-size:12px;color:var(--txt3);border-radius:6px;cursor:pointer;transition:all .2s;}
+    .ddi-sub:hover{background:rgba(0,71,238,.15);color:var(--txt2);}
+    .ddi-sep{border:none;border-top:1px solid var(--brd);margin:4px 0;}
+    .nav-r{display:flex;align-items:center;gap:8px;margin-left:auto;}
+    .btn-srch{background:none;border:none;color:var(--txt2);padding:8px;border-radius:6px;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+    .btn-srch:hover{color:#fff;background:rgba(255,255,255,.1);}
+    .btn-srch svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .btn-sub{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
+    .btn-sub:hover{background:var(--accent-h);transform:translateY(-1px);}
+
+    /* ===== PAGE SYSTEM ===== */
+    .page{display:none;}
+    .page.on{display:block;}
+    @keyframes fi{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+    .fi{animation:fi .35s ease forwards;}
+
+    /* ===== BUTTONS ===== */
+    .btn-p{background:var(--blue);color:#fff;border:none;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;}
+    .btn-p:hover{background:var(--blue-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,71,238,.4);}
+    .btn-s{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.2);padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;transition:all .2s;cursor:pointer;}
+    .btn-s:hover{background:rgba(255,255,255,.15);transform:translateY(-2px);}
+
+    /* ===== HERO HOME ===== */
+    .hero{position:relative;overflow:hidden;min-height:490px;}
+    .hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#001A5A 0%,#00174F 55%,#000D30 100%);}
+    .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,71,238,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(0,71,238,.07) 1px,transparent 1px);background-size:58px 58px;}
+    .hero-glow{position:absolute;width:580px;height:580px;background:radial-gradient(circle,rgba(0,71,238,.22) 0%,transparent 70%);top:-200px;right:-80px;pointer-events:none;}
+    .hero-c{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:60px 24px;display:grid;grid-template-columns:1fr 370px;gap:32px;align-items:start;}
+    .htag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,55,95,.13);border:1px solid rgba(255,55,95,.38);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:20px;}
+    .ldot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 1.5s ease-in-out infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(.8);}}
+    .hh{font-size:clamp(28px,4vw,50px);font-weight:700;line-height:1.1;letter-spacing:-1px;margin-bottom:16px;max-width:660px;}
+    .hh em{font-style:normal;color:var(--blue-l);}
+    .hlead{font-size:16px;color:var(--txt2);max-width:550px;margin-bottom:28px;line-height:1.7;}
+    .hcta{display:flex;gap:12px;flex-wrap:wrap;}
+
+    /* ===== SCORES WIDGET ===== */
+    .sw{background:rgba(0,35,110,.68);border:1px solid var(--brd);border-radius:12px;overflow:hidden;}
+    .sw-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--brd);}
+    .sw-ttl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt2);}
+    .sw-more{font-size:12px;color:var(--blue-l);cursor:pointer;}
+    .mc{padding:13px 16px;border-bottom:1px solid var(--brd);transition:background .2s;cursor:pointer;}
+    .mc:last-child{border-bottom:none;}
+    .mc:hover{background:rgba(0,71,238,.1);}
+    .mc-comp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-l);margin-bottom:7px;}
+    .mc-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+    .mc-teams{display:flex;flex-direction:column;gap:4px;}
+    .mc-row{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:500;}
+    .mc-team{flex:1;}
+    .mc-w{font-weight:700;color:#fff;}
+    .mc-sc{font-family:var(--fm);font-size:15px;font-weight:700;min-width:26px;text-align:center;color:#fff;}
+    .badge{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+    .b-fin{background:rgba(160,184,216,.14);color:var(--txt2);}
+    .b-up{background:rgba(0,71,238,.18);color:var(--blue-l);}
+    .b-live{background:rgba(255,55,95,.18);color:var(--accent);animation:blive 2s ease-in-out infinite;}
+    @keyframes blive{0%,100%{background:rgba(255,55,95,.18);}50%{background:rgba(255,55,95,.33);}}
+
+    /* ===== SECTIONS ===== */
+    .sec{max-width:1280px;margin:0 auto;padding:50px 24px;}
+    .sec-hd{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:26px;}
+    .sec-ttl{font-size:22px;font-weight:700;letter-spacing:-.5px;}
+    .sec-ttl span{color:var(--blue-l);}
+    .sec-lnk{font-size:13px;color:var(--blue-l);cursor:pointer;display:flex;align-items:center;gap:4px;}
+    .sec-lnk:hover{color:#fff;}
+
+    /* ===== ARTICLE CARDS ===== */
+    .ag{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .ac{background:var(--bg3);border:1px solid var(--brd);border-radius:12px;overflow:hidden;cursor:pointer;transition:all .25s;display:flex;flex-direction:column;}
+    .ac:hover{border-color:var(--brd2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.32);}
+    .ac.feat{grid-column:span 2;flex-direction:row;}
+    .ath{background:var(--bg2);position:relative;overflow:hidden;}
+    .ac:not(.feat) .ath{height:200px;}
+    .ac.feat .ath{width:55%;flex-shrink:0;min-height:240px;}
+    .athi{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--bg2),#001A5A);min-height:inherit;position:relative;}
+    .athi-ico{font-size:58px;opacity:.14;}
+    .ath-ov{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,23,79,.82) 100%);}
+    .ath-badge{position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:4px;}
+    .ab{padding:20px;flex:1;display:flex;flex-direction:column;}
+    .acat{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:7px;}
+    .att{font-size:16px;font-weight:700;line-height:1.35;color:#fff;margin-bottom:10px;transition:color .2s;}
+    .ac:hover .att{color:var(--blue-l);}
+    .ac.feat .att{font-size:21px;}
+    .aex{font-size:13px;color:var(--txt2);line-height:1.6;margin-bottom:16px;flex:1;}
+    .ameta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--txt3);}
+
+    /* ===== VIDEO PLACEHOLDER ===== */
+    .vp{background:#000A1F;border-radius:10px;aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;border:1px solid var(--brd);cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+    .vp::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,71,238,.05) 0%,transparent 60%);}
+    .vp:hover{border-color:var(--blue);}
+    .play{width:58px;height:58px;background:rgba(0,71,238,.8);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;color:#fff;transition:all .2s;position:relative;z-index:1;}
+    .vp:hover .play{background:var(--blue);transform:scale(1.1);}
+    .vcap{font-size:13px;color:var(--txt3);text-align:center;position:relative;z-index:1;padding:0 16px;}
+
+    /* ===== UPCOMING ===== */
+    .ug{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .uc{background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:20px;transition:all .2s;cursor:pointer;}
+    .uc:hover{border-color:var(--brd2);transform:translateY(-2px);}
+    .uc-comp{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--blue-l);margin-bottom:11px;}
+    .uc-date{font-size:12px;color:var(--txt3);margin-bottom:13px;display:flex;align-items:center;gap:5px;}
+    .uc-match{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+    .uc-team{display:flex;flex-direction:column;align-items:center;gap:5px;flex:1;}
+    .tf{font-size:27px;}
+    .tn{font-size:12px;font-weight:600;text-align:center;color:var(--txt2);}
+    .vsb{font-size:12px;font-weight:700;color:var(--txt3);padding:4px 8px;border:1px solid var(--brd);border-radius:4px;font-family:var(--fm);}
+
+    /* ===== PAGE HERO ===== */
+    .phero{background:linear-gradient(135deg,#001A5A 0%,#000D35 100%);border-bottom:1px solid var(--brd);padding:56px 24px;position:relative;overflow:hidden;}
+    .phero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(0,71,238,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,71,238,.06) 1px,transparent 1px);background-size:50px 50px;}
+    .phero-c{max-width:1280px;margin:0 auto;position:relative;}
+    .ptag{display:inline-flex;align-items:center;gap:6px;background:rgba(0,71,238,.14);border:1px solid rgba(0,71,238,.38);color:var(--blue-l);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:15px;}
+    .pttl{font-size:clamp(30px,5vw,54px);font-weight:700;letter-spacing:-1px;line-height:1.1;margin-bottom:12px;}
+    .psub{font-size:16px;color:var(--txt2);max-width:580px;}
+
+    /* ===== TEAMS PAGE ===== */
+    .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+    .tc{background:var(--bg3);border:1px solid var(--brd);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s;}
+    .tc:hover{border-color:var(--brd2);transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.32);}
+    .tc-hd{background:linear-gradient(135deg,#001A5A,#00236E);padding:28px 24px;text-align:center;position:relative;border-bottom:1px solid var(--brd);}
+    .tc-flag{font-size:50px;margin-bottom:8px;}
+    .tc-nm{font-size:16px;font-weight:700;}
+    .tc-sp{font-size:12px;color:var(--txt2);margin-top:3px;}
+    .tc-medal{position:absolute;top:11px;right:11px;background:rgba(255,55,95,.14);border:1px solid rgba(255,55,95,.3);border-radius:6px;padding:4px 8px;font-size:11px;color:var(--accent);font-weight:700;}
+    .tc-bd{padding:20px;}
+    .tstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px;}
+    .tstat{text-align:center;}
+    .tsv{font-size:22px;font-weight:700;font-family:var(--fm);color:#fff;}
+    .tsl{font-size:10px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;}
+    .tdiv{border:none;border-top:1px solid var(--brd);margin:14px 0;}
+    .tnxt{font-size:12px;color:var(--txt2);}
+    .tnxt-d{font-weight:600;color:var(--blue-l);}
+
+    /* ===== ARTICLE PAGE ===== */
+    .artp{max-width:820px;margin:0 auto;padding:40px 24px;}
+    .bc{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--txt3);margin-bottom:24px;}
+    .bci{cursor:pointer;transition:color .2s;}
+    .bci:hover{color:#fff;}
+    .bcs{color:var(--txt3);}
+    .art-hd{margin-bottom:26px;}
+    .art-ctag{display:inline-flex;gap:6px;align-items:center;background:rgba(255,55,95,.1);border:1px solid rgba(255,55,95,.28);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:15px;}
+    .art-mttl{font-size:clamp(23px,4vw,38px);font-weight:700;line-height:1.15;letter-spacing:-.5px;margin-bottom:13px;}
+    .art-lead{font-size:17px;color:var(--txt2);line-height:1.7;border-left:3px solid var(--blue);padding-left:18px;margin-bottom:18px;}
+    .art-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--txt3);padding-bottom:20px;border-bottom:1px solid var(--brd);}
+    .ava{display:flex;align-items:center;gap:8px;}
+    .avx{width:32px;height:32px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+    .art-cnt{margin-top:26px;}
+    .art-cnt h2{font-size:21px;font-weight:700;margin:30px 0 14px;color:#fff;}
+    .art-cnt p{font-size:16px;color:#C0D0E8;line-height:1.8;margin-bottom:18px;}
+    .hbox{background:rgba(0,71,238,.08);border:1px solid rgba(0,71,238,.28);border-left:4px solid var(--blue);border-radius:8px;padding:17px 20px;margin:22px 0;}
+    .hbox p{margin-bottom:0;color:var(--txt2);font-style:italic;}
+    .rbn{background:linear-gradient(135deg,rgba(0,71,238,.14),rgba(0,71,238,.04));border:1px solid var(--brd2);border-radius:12px;padding:24px;margin:26px 0;text-align:center;}
+    .rbn-comp{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:15px;}
+    .rbn-teams{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:8px;}
+    .rbn-tnm{font-size:19px;font-weight:700;}
+    .rbn-sc{font-size:40px;font-weight:700;font-family:var(--fm);}
+    .rbn-sep{font-size:30px;color:var(--txt3);font-family:var(--fm);}
+    .rbn-detail{font-size:13px;color:var(--txt3);}
+
+    /* ===== COMMENTS ===== */
+    .cmts{margin-top:46px;padding-top:30px;border-top:1px solid var(--brd);}
+    .cmts-ttl{font-size:18px;font-weight:700;margin-bottom:22px;}
+    .cmt-form{background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:18px;margin-bottom:26px;}
+    .cmt-ta{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--brd);border-radius:8px;padding:13px;font-family:var(--f);font-size:14px;color:#fff;resize:vertical;min-height:95px;margin-bottom:11px;transition:border-color .2s;}
+    .cmt-ta:focus{outline:none;border-color:var(--blue);}
+    .cmt-ta::placeholder{color:var(--txt3);}
+    .cmt-item{display:flex;gap:13px;margin-bottom:18px;}
+    .cmt-av{width:37px;height:37px;background:var(--blue);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+    .cmt-bd{background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:13px;flex:1;}
+    .cmt-au{font-size:13px;font-weight:700;margin-bottom:5px;}
+    .cmt-tx{font-size:14px;color:var(--txt2);line-height:1.6;}
+    .cmt-dt{font-size:11px;color:var(--txt3);margin-top:7px;}
+
+    /* ===== SPORT PAGE ===== */
+    .spnav{background:var(--bg3);border-bottom:1px solid var(--brd);overflow-x:auto;}
+    .sptabs{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;gap:2px;}
+    .spt{padding:14px 17px;font-size:14px;font-weight:500;color:var(--txt2);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:all .2s;background:none;border-left:none;border-right:none;border-top:none;}
+    .spt:hover{color:#fff;}
+    .spt.on{color:var(--blue-l);border-bottom-color:var(--blue);}
+    .comp-hd{display:flex;align-items:center;gap:15px;background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:19px 23px;margin-bottom:26px;}
+    .comp-ico{width:50px;height:50px;background:linear-gradient(135deg,var(--blue),#0035BB);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0;}
+    .comp-nm{font-size:17px;font-weight:700;}
+    .comp-sb{font-size:13px;color:var(--txt2);margin-top:2px;}
+    .comp-bx{margin-left:auto;background:rgba(255,55,95,.1);border:1px solid rgba(255,55,95,.3);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:6px;}
+    .tbl{width:100%;border-collapse:collapse;background:var(--bg3);border:1px solid var(--brd);border-radius:12px;overflow:hidden;}
+    .tbl th{background:rgba(0,71,238,.1);padding:11px 16px;text-align:left;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);}
+    .tbl td{padding:11px 16px;border-top:1px solid var(--brd);font-size:14px;color:var(--txt2);}
+    .tbl tr:hover td{background:rgba(0,71,238,.05);}
+    .trk{font-family:var(--fm);font-weight:700;color:var(--txt3);width:34px;}
+    .trk1{color:#FFD700;} .trk2{color:#C0C0C0;} .trk3{color:#CD7F32;}
+    .tteam{font-weight:600;color:#fff!important;display:flex;align-items:center;gap:8px;}
+    .tpts{font-family:var(--fm);font-weight:700;color:#fff!important;}
+
+    /* ===== DEAFLYMPICS PAGE ===== */
+    .dstats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:30px;}
+    .dstat{background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:20px;text-align:center;}
+    .dstat-v{font-size:30px;font-weight:700;font-family:var(--fm);}
+    .dstat-l{font-size:12px;color:var(--txt3);margin-top:4px;}
+    .medal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:28px;}
+    .medal-box{background:var(--bg3);border-radius:10px;padding:20px;text-align:center;}
+    .medal-num{font-size:34px;font-weight:700;font-family:var(--fm);}
+    .medal-lbl{font-size:12px;color:var(--txt3);margin-top:4px;}
+
+    /* ===== PROMO STRIP ===== */
+    .promo{background:linear-gradient(135deg,rgba(0,71,238,.11),rgba(0,71,238,.04));border:1px solid var(--brd2);border-radius:16px;padding:38px;display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;}
+
+    /* ===== FOOTER ===== */
+    .footer{background:var(--bg2);border-top:1px solid var(--brd);margin-top:80px;}
+    .fmain{max-width:1280px;margin:0 auto;padding:46px 24px;display:grid;grid-template-columns:230px 1fr 1fr 1fr;gap:36px;}
+    .fbrand{font-size:23px;font-weight:700;margin-bottom:11px;}
+    .fbrand .logo-pi{font-size:23px;}
+    .ftag{font-size:13px;color:var(--txt3);line-height:1.6;margin-bottom:18px;}
+    .fsoc{display:flex;gap:9px;}
+    .fsb{width:35px;height:35px;background:rgba(255,255,255,.05);border:1px solid var(--brd);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all .2s;}
+    .fsb:hover{background:rgba(0,71,238,.2);border-color:var(--brd2);}
+    .fct{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);margin-bottom:14px;}
+    .flinks{display:flex;flex-direction:column;gap:9px;}
+    .fl{font-size:14px;color:var(--txt2);cursor:pointer;transition:color .2s;}
+    .fl:hover{color:#fff;}
+    .fbot{border-top:1px solid var(--brd);padding:18px 24px;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;font-size:13px;color:var(--txt3);}
+    .fpwa{display:flex;align-items:center;gap:6px;background:rgba(0,71,238,.1);border:1px solid var(--brd);border-radius:6px;padding:5px 12px;font-size:12px;color:var(--blue-l);}
+
+    /* ===== PWA BANNER ===== */
+    .pwa-bar{background:linear-gradient(90deg,var(--blue),#0035BB);padding:11px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .pwa-txt{font-size:13px;font-weight:500;}
+    .pwa-acts{display:flex;gap:8px;}
+    .pwa-in{background:#fff;color:var(--blue);border:none;padding:7px 15px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;}
+    .pwa-cl{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.28);padding:7px 11px;border-radius:6px;font-size:12px;cursor:pointer;}
+
+    /* ===== BG STRIP ===== */
+    .strip{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);}
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:900px){
+      .hero-c{grid-template-columns:1fr;}
+      .sw{display:none;}
+      .ag{grid-template-columns:1fr;}
+      .ac.feat{flex-direction:column;}
+      .ac.feat .ath{width:100%;min-height:200px;}
+      .ug{grid-template-columns:1fr;}
+      .tg{grid-template-columns:1fr 1fr;}
+      .fmain{grid-template-columns:1fr 1fr;}
+      .nav-links{display:none;}
+      .dstats{grid-template-columns:repeat(2,1fr);}
+      .promo{grid-template-columns:1fr;}
+    }
+    @media(max-width:600px){
+      .tg{grid-template-columns:1fr;}
+      .fmain{grid-template-columns:1fr;}
+      .medal-grid{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- PWA BANNER -->
+<div class="pwa-bar" id="pwab">
+  <div class="pwa-txt">📱 Installez Sport'Pi sur votre écran d'accueil pour un accès rapide !</div>
+  <div class="pwa-acts">
+    <button class="pwa-in">Installer</button>
+    <button class="pwa-cl" onclick="document.getElementById('pwab').style.display='none'">✕</button>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-lbl">🔴 Flash</div>
+    <div class="ticker-track">
+      <div class="ticker-scroll">
+        <span class="ti">⚽ DCL Football 2026 · Manisa (Turquie) — CSS Reims défend son titre</span>
+        <span class="ti">🏟️ DCL Futsal 2026 · Montesilvano, Italie — Inscriptions en cours</span>
+        <span class="ti">🥇 Paméra Losange · Double championne Deaflympics 2025 (100m + 200m)</span>
+        <span class="ti">🏆 DCL Futsal Féminin 2025 · CSSR Toulouse — Finale disputée à domicile</span>
+        <span class="ti">🌍 Deaflympics 2025 Tokyo — France : 9 médailles (4🥇 2🥈 3🥉) · Record historique</span>
+        <span class="ti">🤾 Handball Sourd · France 3e aux Deaflympics de Tokyo 2025</span>
+        <span class="ti">📅 DCL U21 Futsal 2026 · Castelnovo ne' Monti, Italie</span>
+        <span class="ti">⚽ DCL Football 2026 · Manisa (Turquie) — CSS Reims défend son titre</span>
+        <span class="ti">🏟️ DCL Futsal 2026 · Montesilvano, Italie — Inscriptions en cours</span>
+        <span class="ti">🥇 Paméra Losange · Double championne Deaflympics 2025 (100m + 200m)</span>
+        <span class="ti">🏆 DCL Futsal Féminin 2025 · CSSR Toulouse — Finale disputée à domicile</span>
+        <span class="ti">🌍 Deaflympics 2025 Tokyo — France : 9 médailles (4🥇 2🥈 3🥉) · Record historique</span>
+        <span class="ti">🤾 Handball Sourd · France 3e aux Deaflympics de Tokyo 2025</span>
+        <span class="ti">📅 DCL U21 Futsal 2026 · Castelnovo ne' Monti, Italie</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <nav class="nav">
+    <div class="logo" onclick="go('home')">Sport<span class="logo-pi">'Pi</span></div>
+    <div class="nav-links">
+      <div class="ni"><button class="nl on" id="nv-home" onclick="go('home')">Accueil</button></div>
+      <div class="ni">
+        <button class="nl" id="nv-sports">Sports été ▾</button>
+        <div class="dd">
+          <div class="ddi" onclick="go('football')"><span class="ddi-ico">⚽</span>Football</div>
+          <div class="ddi-sub" onclick="go('football')">♂ Masculin</div>
+          <div class="ddi-sub" onclick="go('football-f')">♀ Féminin</div>
+          <hr class="ddi-sep">
+          <div class="ddi" onclick="go('futsal')"><span class="ddi-ico">🏟️</span>Futsal</div>
+          <div class="ddi-sub" onclick="go('futsal')">♂ Masculin</div>
+          <div class="ddi-sub" onclick="go('futsal-f')">♀ Féminin</div>
+          <hr class="ddi-sep">
+          <div class="ddi" onclick="go('handball')"><span class="ddi-ico">🤾</span>Handball</div>
+          <hr class="ddi-sep">
+          <div class="ddi" onclick="go('volleyball')"><span class="ddi-ico">🏐</span>Volley-ball</div>
+          <div class="ddi-sub" onclick="go('volleyball')">♂ Masculin</div>
+          <div class="ddi-sub" onclick="go('volleyball-f')">♀ Féminin</div>
+          <hr class="ddi-sep">
+          <div class="ddi" onclick="go('athletisme')"><span class="ddi-ico">🏃</span>Athlétisme</div>
+          <div class="ddi" onclick="go('cyclisme')"><span class="ddi-ico">🚴</span>Cyclisme</div>
+          <div class="ddi" onclick="go('natation')"><span class="ddi-ico">🏊</span>Natation</div>
+          <div class="ddi" onclick="go('judo')"><span class="ddi-ico">🥋</span>Judo</div>
+        </div>
+      </div>
+      <div class="ni">
+        <button class="nl" id="nv-hiver">Sports hiver ▾</button>
+        <div class="dd">
+          <div class="ddi" onclick="go('ski-alpin')"><span class="ddi-ico">⛷️</span>Ski alpin</div>
+          <div class="ddi" onclick="go('ski-nordique')"><span class="ddi-ico">🎿</span>Ski nordique</div>
+          <div class="ddi" onclick="go('snowboard')"><span class="ddi-ico">🏂</span>Snowboard</div>
+        </div>
+      </div>
+      <div class="ni"><button class="nl" id="nv-edf" onclick="go('equipes-france')">Équipes de France</button></div>
+      <div class="ni"><button class="nl" id="nv-deaf" onclick="go('deaflympics')">Deaflympics</button></div>
+      <div class="ni"><button class="nl">À propos</button></div>
+    </div>
+    <div class="nav-r">
+      <button class="btn-srch" title="Rechercher"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
+      <button class="btn-sub">S'abonner</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ===================== PAGE : ACCUEIL ===================== -->
+<div id="page-home" class="page on">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-c">
+      <div>
+        <div class="htag"><div class="ldot"></div>Actualité · Sport sourd</div>
+        <h1 class="hh">Le média de référence du <em>sport sourd</em> en France</h1>
+        <p class="hlead">Résultats en direct, interviews signées, analyses — DCL, Deaflympics, Championnats nationaux. Tout le sport sourd, pour et par la communauté.</p>
+        <div class="hcta">
+          <button class="btn-p" onclick="go('article-dcl')">🏆 CSS Reims, Champions d'Europe !</button>
+          <button class="btn-s" onclick="go('football')">Dernières actualités DCL →</button>
+        </div>
+      </div>
+      <!-- SCORES WIDGET -->
+      <div class="sw">
+        <div class="sw-hd">
+          <div class="sw-ttl">Résultats récents</div>
+          <div class="sw-more" onclick="go('deaflympics')">Tous →</div>
+        </div>
+        <div class="mc" onclick="go('article-dcl')">
+          <div class="mc-comp">🏆 DCL Football 2025 · Finale</div>
+          <div class="mc-meta"><span class="badge b-fin">Terminé</span><span style="font-size:11px;color:var(--txt3)">31 mai 2025</span></div>
+          <div class="mc-teams">
+            <div class="mc-row"><span class="mc-team mc-w">🇫🇷 CSS Reims</span><span class="mc-sc">2</span></div>
+            <div class="mc-row"><span class="mc-team">🇬🇷 POK Athènes</span><span class="mc-sc">1</span></div>
+          </div>
+        </div>
+        <div class="mc" onclick="go('handball')">
+          <div class="mc-comp">🌍 Deaflympics 2025 · Handball · Finale</div>
+          <div class="mc-meta"><span class="badge b-fin">Terminé</span><span style="font-size:11px;color:var(--txt3)">25 nov. 2025</span></div>
+          <div class="mc-teams">
+            <div class="mc-row"><span class="mc-team mc-w">🇭🇷 Croatie</span><span class="mc-sc">38</span></div>
+            <div class="mc-row"><span class="mc-team">🇫🇷 France 🥉</span><span class="mc-sc">30</span></div>
+          </div>
+        </div>
+        <div class="mc" onclick="go('athletisme')">
+          <div class="mc-comp">🏅 Deaflympics 2025 · 100m Femmes</div>
+          <div class="mc-meta"><span class="badge b-fin">Terminé</span><span style="font-size:11px;color:var(--txt3)">17 nov. 2025</span></div>
+          <div class="mc-teams">
+            <div class="mc-row"><span class="mc-team mc-w">🇫🇷 Paméra Losange 🥇</span><span class="mc-sc">1re</span></div>
+          </div>
+        </div>
+        <div class="mc" onclick="go('football')">
+          <div class="mc-comp">🏆 DCL Football 2026 · Manisa</div>
+          <div class="mc-meta"><span class="badge b-up">À venir</span><span style="font-size:11px;color:var(--txt3)">Turquie 🇹🇷</span></div>
+          <div class="mc-teams">
+            <div class="mc-row"><span class="mc-team">🇫🇷 CSS Reims (tenant)</span><span class="mc-sc">vs</span></div>
+            <div class="mc-row"><span class="mc-team">🏆 Challengers européens</span><span class="mc-sc"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À LA UNE -->
+  <div class="sec">
+    <div class="sec-hd">
+      <h2 class="sec-ttl">À la <span>une</span></h2>
+      <span class="sec-lnk">Toutes les actus →</span>
+    </div>
+    <div class="ag">
+      <!-- ARTICLE FEATURED -->
+      <div class="ac feat" onclick="go('article-dcl')">
+        <div class="ath">
+          <div class="athi" style="background:linear-gradient(135deg,#001A5A,#000D30);">
+            <span class="athi-ico">⚽</span>
+            <div class="ath-ov"></div>
+          </div>
+          <div class="ath-badge">Exclusif</div>
+        </div>
+        <div class="ab">
+          <div class="acat">DCL Football · Reims 2025</div>
+          <div class="att">CSS Reims fait l'histoire : première victoire d'un club organisateur en DCL Football</div>
+          <div class="aex">En remportant la 16e édition de la Deaf Champions League à domicile face au POK Athènes (2-1), le Club de Sport des Sourds de Reims entre dans la légende. Les jumeaux Recober et le Japonais Kodaï Hayashi en vedette.</div>
+          <div style="margin-bottom:14px;">
+            <div class="vp" style="aspect-ratio:16/9;max-height:170px;">
+              <div class="play">▶</div>
+              <div class="vcap">Résumé finale · CSS Reims 2-1 POK Athènes</div>
+            </div>
+          </div>
+          <div class="ameta"><span>📅 1 juin 2025</span><span>⏱ 5 min</span><span>👁 12 400</span></div>
+        </div>
+      </div>
+      <!-- ARTICLE 2 -->
+      <div class="ac" onclick="go('article-deaflympics')">
+        <div class="ath">
+          <div class="athi" style="background:linear-gradient(135deg,#001A5A,#001230);">
+            <span class="athi-ico">🏅</span>
+            <div class="ath-ov"></div>
+          </div>
+          <div class="ath-badge" style="background:#FFD700;color:#000;">9 médailles</div>
+        </div>
+        <div class="ab">
+          <div class="acat">Deaflympics 2025 · Tokyo</div>
+          <div class="att">Paméra Losange, étoile de Tokyo : double championne des Deaflympics 2025</div>
+          <div class="aex">La sprinteuse s'offre le doublé 100m-200m, portant la France à 9 médailles. Un bilan historique pour le sport sourd tricolore.</div>
+          <div class="ameta"><span>📅 27 nov. 2025</span><span>⏱ 4 min</span><span>👁 8 700</span></div>
+        </div>
+      </div>
+      <!-- ARTICLE 3 -->
+      <div class="ac" onclick="go('futsal')">
+        <div class="ath">
+          <div class="athi" style="background:linear-gradient(135deg,#001430,#001A5A);">
+            <span class="athi-ico">🏟️</span>
+            <div class="ath-ov"></div>
+          </div>
+          <div class="ath-badge" style="background:var(--blue);">DCL Futsal 2026</div>
+        </div>
+        <div class="ab">
+          <div class="acat">Futsal · Montesilvano 2026</div>
+          <div class="att">Montesilvano accueillera les meilleurs clubs sourds d'Europe pour la DCL Futsal 2026</div>
+          <div class="aex">La ville italienne s'apprête à vibrer au rythme du futsal sourd. Toutes les infos sur la prochaine édition.</div>
+          <div class="ameta"><span>📅 4 mai 2026</span><span>⏱ 3 min</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCHAINES COMPÉTITIONS -->
+  <div class="strip">
+    <div class="sec">
+      <div class="sec-hd">
+        <h2 class="sec-ttl">Prochaines <span>compétitions</span></h2>
+        <span class="sec-lnk">Calendrier complet →</span>
+      </div>
+      <div class="ug">
+        <div class="uc" onclick="go('football')">
+          <div class="uc-comp">🏆 DCL Football 2026</div>
+          <div class="uc-date">📍 Manisa, Turquie · Été 2026</div>
+          <div class="uc-match">
+            <div class="uc-team"><div class="tf">🇫🇷</div><div class="tn">CSS Reims (tenant)</div></div>
+            <div class="vsb">TBD</div>
+            <div class="uc-team"><div class="tf">🏆</div><div class="tn">16 clubs européens</div></div>
+          </div>
+        </div>
+        <div class="uc" onclick="go('futsal')">
+          <div class="uc-comp">⚽ DCL Futsal Hommes 2026</div>
+          <div class="uc-date">📍 Montesilvano, Italie · 2026</div>
+          <div class="uc-match">
+            <div class="uc-team"><div class="tf">🇮🇹</div><div class="tn">Montesilvano</div></div>
+            <div class="vsb">HOST</div>
+            <div class="uc-team"><div class="tf">🇪🇺</div><div class="tn">Europe</div></div>
+          </div>
+        </div>
+        <div class="uc" onclick="go('futsal')">
+          <div class="uc-comp">👦 DCL U21 Futsal 2026</div>
+          <div class="uc-date">📍 Castelnovo ne' Monti, Italie</div>
+          <div class="uc-match">
+            <div class="uc-team"><div class="tf">🇮🇹</div><div class="tn">Italie</div></div>
+            <div class="vsb">2026</div>
+            <div class="uc-team"><div class="tf">🌍</div><div class="tn">U21 Europe</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROMO EDF -->
+  <div class="sec">
+    <div class="promo">
+      <div>
+        <div class="htag" style="margin-bottom:14px;">🇫🇷 Équipes de France</div>
+        <h3 style="font-size:26px;font-weight:700;margin-bottom:9px;letter-spacing:-.5px;">Suivez les Bleus du sport sourd</h3>
+        <p style="color:var(--txt2);max-width:520px;line-height:1.7;">Football, futsal, handball, athlétisme, cyclisme... Retrouvez l'actualité complète de toutes les équipes nationales sourdes — résultats, calendriers et portraits d'athlètes.</p>
+      </div>
+      <button class="btn-p" style="padding:14px 28px;font-size:15px;white-space:nowrap;" onclick="go('equipes-france')">Voir les équipes →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : ARTICLE DCL ===================== -->
+<div id="page-article-dcl" class="page">
+  <div class="artp">
+    <div class="bc">
+      <span class="bci" onclick="go('home')">Accueil</span><span class="bcs">›</span>
+      <span class="bci" onclick="go('football')">Football</span><span class="bcs">›</span>
+      <span style="color:var(--txt2)">DCL 2025 — CSS Reims champion</span>
+    </div>
+    <div class="art-hd">
+      <div class="art-ctag">⚽ DCL Football · Reims 2025</div>
+      <h1 class="art-mttl">CSS Reims fait l'histoire : premier club organisateur sacré champion d'Europe en DCL</h1>
+      <p class="art-lead">En remportant la 16e édition de la Deaf Champions League à domicile (26-31 mai 2025), le CSS Reims réussit ce qu'aucun club organisateur n'avait jamais accompli depuis la création de la compétition en 2008.</p>
+      <div class="art-meta">
+        <div class="ava"><div class="avx">SP</div><span>Rédaction Sport'Pi</span></div>
+        <span>📅 1 juin 2025</span><span>⏱ 5 min de lecture</span><span>🌍 Reims, France</span>
+      </div>
+    </div>
+    <!-- VIDEO PRINCIPALE -->
+    <div class="vp" style="margin-bottom:26px;">
+      <div class="play">▶</div>
+      <div class="vcap">Résumé complet · DCL Football 2025 · Finale<br>CSS Reims 2-1 POK Athènes · Stade de la Muire, Tinqueux</div>
+    </div>
+    <div class="art-cnt fi">
+      <p>C'était une première dans l'histoire de la Deaf Champions League. Depuis la création de cette compétition en 2008 à Londres, jamais un club organisateur n'avait réussi à remporter le titre sur ses propres installations. Le CSS Reims, fondé en 1933, a brisé cette malédiction le samedi 31 mai 2025 au Stade de la Muire à Tinqueux, devant plus de 3 000 spectateurs.</p>
+      <div class="rbn">
+        <div class="rbn-comp">🏆 DCL Football 2025 — Finale · 31 mai 2025 · Reims, France</div>
+        <div class="rbn-teams">
+          <div class="rbn-tnm">🇫🇷 CSS Reims</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="rbn-sc">2</span>
+            <span class="rbn-sep">—</span>
+            <span class="rbn-sc">1</span>
+          </div>
+          <div class="rbn-tnm">🇬🇷 POK Athènes</div>
+        </div>
+        <div class="rbn-detail">Mi-temps : 1-0 · Buteurs CSS Reims : Guyon (14'), Hayashi (23', 78')</div>
+      </div>
+      <h2>Un trio franco-japonais décisif</h2>
+      <p>Pour décrocher ce titre, le CSS Reims s'est appuyé sur un noyau solide — les jumeaux Paul et Théophile Recober (USC Dijon), récemment sacrés champions d'Europe avec l'équipe de France en 2024 — renforcé par trois joueurs japonais dont la qualité a fait la différence tout au long de la semaine.</p>
+      <p>Sewati Guyon, premier buteur de la campagne rémoise, et le spectaculaire Kodaï Hayashi, auteur d'un doublé en finale, sont entrés dans la légende du club. En plus du titre collectif, Paul Recober a été nommé dans l'équipe-type de la compétition.</p>
+      <div class="hbox"><p>"Remporter la DCL à domicile, c'est le rêve absolu. Cette victoire appartient à tous les sourds de France et à nos incroyables supporters." — Gilles Bouchonneau, coordinateur CSS Reims</p></div>
+      <h2>16 équipes, 8 nations</h2>
+      <p>La compétition avait réuni 16 équipes de 8 nations (France, Angleterre, Espagne, Italie, Allemagne, Grèce, Turquie, Pologne) au complexe des Églantines pour la phase de groupes. Les matchs ont été intégralement diffusés en direct sur YouTube — une visibilité inédite pour le football sourd européen.</p>
+      <div class="vp" style="margin:22px 0;">
+        <div class="play">▶</div>
+        <div class="vcap">Interview : Paul Recober après la victoire · DCL Football 2025</div>
+      </div>
+      <h2>CSS Reims, porte-drapeau du football sourd français</h2>
+      <p>Club emblématique fondé en 1933 avec à son actif 3 championnats de France et 4 Coupes de France, le CSSR défendra son titre lors de la prochaine édition de la DCL Football à Manisa, en Turquie, en 2026.</p>
+    </div>
+    <!-- COMMENTAIRES -->
+    <div class="cmts">
+      <div class="cmts-ttl">💬 Commentaires (14)</div>
+      <div class="cmt-form">
+        <textarea class="cmt-ta" placeholder="Partagez votre réaction... (espace accessible, sous-titres disponibles)"></textarea>
+        <button class="btn-p">Publier mon commentaire</button>
+      </div>
+      <div class="cmt-item">
+        <div class="cmt-av">ML</div>
+        <div class="cmt-bd">
+          <div class="cmt-au">Marie-Laure R.</div>
+          <div class="cmt-tx">Quelle fierté ! J'étais dans les tribunes samedi, l'ambiance était incroyable. Bravo aux Pandas ! 🐼</div>
+          <div class="cmt-dt">1 juin 2025 · 18h22</div>
+        </div>
+      </div>
+      <div class="cmt-item">
+        <div class="cmt-av" style="background:var(--accent);">TD</div>
+        <div class="cmt-bd">
+          <div class="cmt-au">Thomas D.</div>
+          <div class="cmt-tx">Paul et Théophile Recober sont des monstres. Deux Dijonnais champions d'Europe, chapeau bas !</div>
+          <div class="cmt-dt">2 juin 2025 · 09h14</div>
+        </div>
+      </div>
+      <div class="cmt-item">
+        <div class="cmt-av" style="background:#1A5A00;">KH</div>
+        <div class="cmt-bd">
+          <div class="cmt-au">Kenji H.</div>
+          <div class="cmt-tx">Hayashi 🇯🇵🔥 Best player of the tournament. Great win for CSSR !</div>
+          <div class="cmt-dt">2 juin 2025 · 11h30</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : ARTICLE DEAFLYMPICS ===================== -->
+<div id="page-article-deaflympics" class="page">
+  <div class="artp">
+    <div class="bc">
+      <span class="bci" onclick="go('home')">Accueil</span><span class="bcs">›</span>
+      <span class="bci" onclick="go('deaflympics')">Deaflympics</span><span class="bcs">›</span>
+      <span style="color:var(--txt2)">Tokyo 2025 — Bilan France</span>
+    </div>
+    <div class="art-hd">
+      <div class="art-ctag">🏅 Deaflympics 2025 · Tokyo</div>
+      <h1 class="art-mttl">Paméra Losange, reine de Tokyo : double championne des Deaflympics 2025</h1>
+      <p class="art-lead">La sprinteuse tricolore s'offre le doublé 100m-200m, portant la France à 9 médailles (4 or, 2 argent, 3 bronze) et une performance historique pour le mouvement sportif sourd français.</p>
+      <div class="art-meta">
+        <div class="ava"><div class="avx">SP</div><span>Rédaction Sport'Pi</span></div>
+        <span>📅 27 nov. 2025</span><span>⏱ 4 min de lecture</span><span>🌍 Tokyo, Japon</span>
+      </div>
+    </div>
+    <div class="vp" style="margin-bottom:26px;">
+      <div class="play">▶</div>
+      <div class="vcap">Finale 100m · Paméra Losange 🥇 · Deaflympics Tokyo 2025</div>
+    </div>
+    <div class="art-cnt fi">
+      <div class="medal-grid">
+        <div class="medal-box" style="border:1px solid #FFD700;">
+          <div class="medal-num" style="color:#FFD700;">4</div>
+          <div class="medal-lbl">🥇 Médailles d'or</div>
+        </div>
+        <div class="medal-box" style="border:1px solid #C0C0C0;">
+          <div class="medal-num" style="color:#C0C0C0;">2</div>
+          <div class="medal-lbl">🥈 Médailles d'argent</div>
+        </div>
+        <div class="medal-box" style="border:1px solid #CD7F32;">
+          <div class="medal-num" style="color:#CD7F32;">3</div>
+          <div class="medal-lbl">🥉 Médailles de bronze</div>
+        </div>
+      </div>
+      <p>La 25e édition des Deaflympics d'été a fermé ses portes le 26 novembre 2025 à Tokyo avec un record historique : 3 070 athlètes de 81 nations, sur 21 disciplines. Pour la France, engagée avec 73 athlètes sur 11 disciplines, ces Jeux restent comme l'édition du renouveau — sous l'égide du Comité Paralympique et Sportif Français, partenaire officiel pour la première fois.</p>
+      <h2>Paméra Losange, la star incontestée</h2>
+      <p>Favorite sur le sprint, Paméra Losange a délivré une performance royale en s'adjugeant le titre sur 100m puis sur 200m — deux médailles d'or qui font d'elle la grande dame de ces Jeux côté tricolore. Sa vitesse et sa sérénité sous pression ont sidéré le public nippon.</p>
+      <div class="hbox"><p>"Ces deux médailles d'or représentent des années de travail et de sacrifice. Je les dédie à toute la communauté sourde de France qui m'a soutenue." — Paméra Losange, double championne Deaflympics 2025</p></div>
+      <h2>Handball et Football en bronze, Golf en argent</h2>
+      <p>Le handball masculin a décroché le bronze à Tokyo, tout comme l'équipe de football sourd. En golf, Margaux Brejo a brillé avec l'argent, terminant deuxième derrière l'intouchable Diksha Dagar. Des performances qui confirment la profondeur du sport sourd français.</p>
+      <div class="vp" style="margin:22px 0;">
+        <div class="play">▶</div>
+        <div class="vcap">Bilan complet de la délégation française · Deaflympics Tokyo 2025</div>
+      </div>
+      <p>Paul Servières (cyclisme), Ludovic Bartout (bowling), Clément Allegranti et Louis Gobet (cyclisme) ont également représenté fièrement la France. 73 athlètes, 11 disciplines, 9 médailles : une édition qui restera dans les annales du sport sourd français.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : FOOTBALL ===================== -->
+<div id="page-football" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">⚽ Discipline</div>
+      <h1 class="pttl">Football Sourd</h1>
+      <p class="psub">DCL Football, Championnat de France et Deaflympics — toute l'actu du football sourd en Europe et dans le monde.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">DCL Football</button>
+      <button class="spt">Champ. de France</button>
+      <button class="spt">Équipe de France</button>
+      <button class="spt">Vidéos</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">⚽</div>
+      <div><div class="comp-nm">Deaf Champions League Football</div><div class="comp-sb">17e édition · Manisa, Turquie · 2026</div></div>
+      <div class="comp-bx">Tenant : CSS Reims 🏆</div>
+    </div>
+    <div class="ag" style="grid-template-columns:1fr 1fr;margin-bottom:38px;">
+      <div class="ac" onclick="go('article-dcl')">
+        <div class="ath"><div class="athi"><span class="athi-ico">⚽</span><div class="ath-ov"></div></div><div class="ath-badge">Résultat final</div></div>
+        <div class="ab">
+          <div class="acat">DCL 2025 · Finale · Reims</div>
+          <div class="att">CSS Reims 2-1 POK Athènes : les Pandas sacrés champions d'Europe !</div>
+          <div class="aex">Une victoire historique pour le football sourd français. Premier club organisateur à remporter la DCL depuis 2008.</div>
+          <div class="vp" style="height:90px;aspect-ratio:auto;margin-bottom:12px;"><div class="play" style="width:38px;height:38px;font-size:15px;">▶</div><div class="vcap" style="font-size:11px;">Résumé finale · 3 min</div></div>
+          <div class="ameta"><span>📅 1 juin 2025</span></div>
+        </div>
+      </div>
+      <div class="ac" onclick="go('football')">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001A5A,#001230);"><span class="athi-ico">🇹🇷</span><div class="ath-ov"></div></div><div class="ath-badge" style="background:var(--blue);">2026</div></div>
+        <div class="ab">
+          <div class="acat">DCL Football 2026 · Manisa</div>
+          <div class="att">La Turquie accueillera la 17e DCL Football — CSS Reims défend son titre</div>
+          <div class="aex">La ville de Manisa en Turquie sera le théâtre de la prochaine Deaf Champions League Football. Qualifications en cours pour les clubs nationaux.</div>
+          <div class="ameta"><span>📅 4 mai 2026</span></div>
+        </div>
+      </div>
+    </div>
+    <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">🏆 Palmarès DCL Football</h3>
+    <table class="tbl" style="margin-bottom:38px;">
+      <thead><tr><th>#</th><th>Édition</th><th>Lieu</th><th>Vainqueur</th><th>Finaliste</th></tr></thead>
+      <tbody>
+        <tr><td class="trk trk1">2025</td><td>16e DCL</td><td>Reims 🇫🇷</td><td class="tteam">🇫🇷 CSS Reims</td><td>🇬🇷 POK Athènes</td></tr>
+        <tr><td class="trk">2024</td><td>15e DCL</td><td>Athènes 🇬🇷</td><td class="tteam">🇬🇷 POK Athènes</td><td>🇩🇪 BSG Essen</td></tr>
+        <tr><td class="trk">2023</td><td>14e DCL</td><td>Varsovie 🇵🇱</td><td class="tteam">🇬🇷 POK Athènes</td><td>🏴󠁧󠁢󠁥󠁮󠁧󠁿 St John's London</td></tr>
+        <tr><td class="trk">2022</td><td>13e DCL</td><td>Patras 🇬🇷</td><td class="tteam">🇬🇷 POK Athènes</td><td>🇪🇸 CD Madrid Sordo</td></tr>
+        <tr><td class="trk">2019</td><td>12e DCL</td><td>Londres 🏴󠁧󠁢󠁥󠁮󠁧󠁿</td><td class="tteam">🏴󠁧󠁢󠁥󠁮󠁧󠁿 St John's London</td><td>🇩🇪 BSG Essen</td></tr>
+        <tr><td class="trk">2018</td><td>11e DCL</td><td>Milan 🇮🇹</td><td class="tteam">🇮🇹 Sordi Milan</td><td>🇬🇷 POK Athènes</td></tr>
+      </tbody>
+    </table>
+    <div class="vp"><div class="play">▶</div><div class="vcap">DCL Football 2025 · Reims — Temps forts de la semaine</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : FUTSAL ===================== -->
+<div id="page-futsal" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏟️ Discipline</div>
+      <h1 class="pttl">Futsal Sourd</h1>
+      <p class="psub">DCL Futsal Hommes, Femmes et U21 — La compétition européenne de futsal sourd à suivre sur Sport'Pi.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">DCL Futsal Hommes</button>
+      <button class="spt">DCL Futsal Femmes</button>
+      <button class="spt">DCL U21</button>
+      <button class="spt">Équipe de France</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">🏟️</div>
+      <div><div class="comp-nm">DCL Futsal Hommes 2026</div><div class="comp-sb">Montesilvano / Pescara, Italie</div></div>
+      <div class="comp-bx">À venir · 2026</div>
+    </div>
+    <div class="ug" style="margin-bottom:36px;">
+      <div class="uc"><div class="uc-comp">🏟️ DCL Futsal Hommes</div><div class="uc-date">📍 Montesilvano, Italie · 2026</div><div style="font-size:13px;color:var(--txt2);margin-top:8px;">Édition 2025 : Huelva, Espagne ✓</div></div>
+      <div class="uc"><div class="uc-comp">👩 DCL Futsal Femmes</div><div class="uc-date">📍 Guimarães, Portugal · 2027</div><div style="font-size:13px;color:var(--txt2);margin-top:8px;">Édition 2025 : Toulouse 🇫🇷 ✓</div></div>
+      <div class="uc"><div class="uc-comp">👦 DCL U21 Futsal</div><div class="uc-date">📍 Castelnovo ne' Monti, Italie · 2026</div><div style="font-size:13px;color:var(--txt2);margin-top:8px;">Édition 2025 : Zaanstad (Pays-Bas) ✓</div></div>
+    </div>
+    <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">📺 Derniers highlights</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div class="vp"><div class="play">▶</div><div class="vcap">DCL Futsal Hommes 2025 · Huelva — Résumé de la finale</div></div>
+      <div class="vp"><div class="play">▶</div><div class="vcap">DCL Futsal Femmes 2025 · Toulouse — Les plus belles actions</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : HANDBALL ===================== -->
+<div id="page-handball" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🤾 Discipline</div>
+      <h1 class="pttl">Handball Sourd</h1>
+      <p class="psub">Challenge de France, Coupe de France HandSourd et Équipe de France — toute l'actualité du handball sourd en France.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on" onclick="showHbTab(0,this)">Challenge National</button>
+      <button class="spt" onclick="showHbTab(1,this)">Coupe de France</button>
+      <button class="spt" onclick="showHbTab(2,this)">Équipe de France</button>
+      <button class="spt" onclick="showHbTab(3,this)">Deaflympics 2025</button>
+    </div>
+  </div>
+
+  <!-- TAB 0 : CHALLENGE NATIONAL -->
+  <div class="hb-tab" id="hbt-0">
+    <div class="sec">
+      <div class="comp-hd">
+        <div class="comp-ico">🤾</div>
+        <div><div class="comp-nm">Challenge de France HandSourd Masculin</div><div class="comp-sb">Saison 2025-2026 · FFHB · National</div></div>
+        <a href="https://www.ffhandball.fr/competitions/saison-2025-2026-21/national/challenge-de-france-handsourd-masculin-2025-26-29129/poule-173813/" target="_blank" class="comp-bx" style="text-decoration:none;">↗ Voir sur FFHB</a>
+      </div>
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">📋 Derniers résultats</h3>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+        <div class="mc" style="border-radius:10px;border:1px solid var(--brd);">
+          <div class="mc-comp">Challenge de France HandSourd · Saison 2025-26</div>
+          <div class="mc-meta"><span class="badge b-up">En cours</span><span style="font-size:11px;color:var(--txt3)">Voir ffhandball.fr</span></div>
+          <div class="mc-teams">
+            <div class="mc-row"><span class="mc-team">🏙️ CAPO Limoges HB</span><span class="mc-sc">vs</span></div>
+            <div class="mc-row"><span class="mc-team">🏙️ CSSM Paris</span><span class="mc-sc"></span></div>
+          </div>
+          <div style="margin-top:8px;font-size:11px;color:var(--txt3);">Résultats complets sur <a href="https://www.ffhandball.fr/competitions/saison-2025-2026-21/national/challenge-de-france-handsourd-masculin-2025-26-29129/poule-173813/" target="_blank" style="color:var(--blue-l);">ffhandball.fr</a></div>
+        </div>
+      </div>
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">📊 Clubs participants · Challenge 2025-26</h3>
+      <table class="tbl" style="margin-bottom:32px;">
+        <thead><tr><th>#</th><th>Club</th><th>Ville</th></tr></thead>
+        <tbody>
+          <tr><td class="trk">·</td><td class="tteam">🤾 CAPO Limoges HB</td><td>Limoges</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 CSSM Paris</td><td>Paris</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 AS Tolosa</td><td>Toulouse</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 ASS Lyon</td><td>Lyon</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 HBC Roumois</td><td>Normandie</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 SO Calais HB</td><td>Calais</td></tr>
+          <tr><td class="trk">·</td><td class="tteam">🤾 Rouen HB Sourd</td><td>Rouen</td></tr>
+        </tbody>
+      </table>
+      <div class="vp"><div class="play">▶</div><div class="vcap">Challenge de France HandSourd · Temps forts saison 2025-26</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 1 : COUPE DE FRANCE -->
+  <div class="hb-tab" id="hbt-1" style="display:none;">
+    <div class="sec">
+      <div class="comp-hd">
+        <div class="comp-ico">🏆</div>
+        <div><div class="comp-nm">Coupe de France HandSourd 2025</div><div class="comp-sb">Finale · Accor Arena, Paris-Bercy · 24 mai 2025</div></div>
+        <div class="comp-bx">CAPO Limoges 🏆 Vainqueur</div>
+      </div>
+      <div class="rbn" style="margin-bottom:28px;">
+        <div class="rbn-comp">🏆 Finale Coupe de France HandSourd · 24 mai 2025 · Accor Arena, Paris</div>
+        <div class="rbn-teams">
+          <div class="rbn-tnm">🏙️ CAPO Limoges</div>
+          <div style="display:flex;align-items:center;gap:8px;"><span class="rbn-sc">34</span><span class="rbn-sep">—</span><span class="rbn-sc">28</span></div>
+          <div class="rbn-tnm">🏙️ AS Tolosa</div>
+        </div>
+        <div class="rbn-detail">Mi-temps : 16-15 · Arbitres : J. Gheniou / A. Leenhardt · Carton rouge : A. Danial (CAPO)</div>
+      </div>
+      <div style="background:rgba(255,55,95,.06);border:1px solid rgba(255,55,95,.2);border-radius:10px;padding:20px;margin-bottom:24px;">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;">🏆 Historique — Première pour CAPO Limoges</div>
+        <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Le CAPO Limoges remporte la Coupe de France HandSourd pour la première fois de son histoire, face au tenant du titre 2024, l'AS Tolosa. Victoire arrachée en 2e mi-temps malgré le carton rouge d'Abdallah Danial. Alexis Chabernaud, ailier droit et capitaine, a conduit ses partenaires au titre.</p>
+      </div>
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">🎯 Points clés de la finale</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px;">
+        <div class="uc">
+          <div class="uc-comp">🏙️ CAPO Limoges · Vainqueur</div>
+          <div style="font-size:13px;color:var(--txt2);margin-top:6px;line-height:1.8;">⭐ Alexis Chabernaud — Cap. &amp; ailier droit<br>Abdallah Danial — Meneur (🟥 2e MT)<br>Bryan Brulé · Clément Hubert<br>Hakim Si Ahmed · Lionel Touraud</div>
+        </div>
+        <div class="uc">
+          <div class="uc-comp">🏙️ AS Tolosa · Finaliste</div>
+          <div style="font-size:13px;color:var(--txt2);margin-top:6px;line-height:1.8;">Erwann Vivet — 3 buts en 9 min (1re MT)<br>Anthony Bagrowski<br>Noah Delille<br>Victor Louchart</div>
+        </div>
+      </div>
+      <div class="hbox"><p>"C'était une première expérience pour nous tous et aussi une première pour le club. C'est vraiment historique d'avoir remporté la finale." — Alexis Chabernaud, capitaine CAPO Limoges</p></div>
+      <div class="vp" style="margin-top:24px;"><div class="play">▶</div><div class="vcap">Finale Coupe de France HandSourd 2025 · CAPO Limoges 34-28 AS Tolosa · Accor Arena</div></div>
+    </div>
+  </div>
+
+  <!-- TAB 2 : ÉQUIPE DE FRANCE -->
+  <div class="hb-tab" id="hbt-2" style="display:none;">
+    <div class="sec">
+      <div class="comp-hd">
+        <div class="comp-ico">🇫🇷</div>
+        <div><div class="comp-nm">Équipe de France HandSourd</div><div class="comp-sb">Entraîneur : Thibaud Robert · Manager : Julien Goy</div></div>
+        <div class="comp-bx">🥉 Deaflympics Tokyo 2025</div>
+      </div>
+      <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">👥 Groupe · Sélection nationale 2024-25</h3>
+      <table class="tbl" style="margin-bottom:28px;">
+        <thead><tr><th>Joueur</th><th>Club</th></tr></thead>
+        <tbody>
+          <tr><td class="tteam">Anthony Bagrowski</td><td>AS Tolosa</td></tr>
+          <tr><td class="tteam">Bryan Brulé</td><td>CAPO Limoges HB</td></tr>
+          <tr><td class="tteam">Antoine Combettes</td><td>CSSM Paris</td></tr>
+          <tr><td class="tteam">Noah Delille</td><td>AS Tolosa</td></tr>
+          <tr><td class="tteam">Luc Foret</td><td>HBC Roumois</td></tr>
+          <tr><td class="tteam">Raphaël Fruchard</td><td>ASS Lyon</td></tr>
+          <tr><td class="tteam">Alexandre Guichard</td><td>ASS Lyon</td></tr>
+          <tr><td class="tteam">Clément Hubert</td><td>CAPO Limoges HB</td></tr>
+          <tr><td class="tteam">Victor Louchart</td><td>AS Tolosa</td></tr>
+          <tr><td class="tteam">Florian Paucet</td><td>ASS Lyon</td></tr>
+          <tr><td class="tteam">Allan Poultier</td><td>SO Calais HB</td></tr>
+          <tr><td class="tteam">Corentin Sellier</td><td>Rouen HB</td></tr>
+          <tr><td class="tteam">Hakim Si Ahmed</td><td>CAPO Limoges HB</td></tr>
+          <tr><td class="tteam">Lionel Touraud</td><td>CAPO Limoges HB</td></tr>
+          <tr><td class="tteam">Hugo Vincent</td><td>AMSL Fréjus</td></tr>
+          <tr><td class="tteam">Erwann Vivet</td><td>AS Tolosa</td></tr>
+        </tbody>
+      </table>
+      <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:18px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--txt3);margin-bottom:10px;">Staff technique</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:14px;color:var(--txt2);">
+          <div>🎯 Entraîneur : <strong style="color:#fff;">Thibaud Robert</strong></div>
+          <div>🎯 Adj. : <strong style="color:#fff;">Pascal Gadzinsky</strong></div>
+          <div>🩺 Kiné : <strong style="color:#fff;">Marine Lambert</strong></div>
+          <div>📋 Manager : <strong style="color:#fff;">Julien Goy</strong></div>
+          <div>🏃 CTN Parahand : <strong style="color:#fff;">Mourad Bounouara</strong></div>
+          <div>🤟 Interprète LSF : <strong style="color:#fff;">Christophe Caron</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3 : DEAFLYMPICS -->
+  <div class="hb-tab" id="hbt-3" style="display:none;">
+    <div class="sec">
+      <div class="rbn">
+        <div class="rbn-comp">🌍 Deaflympics 2025 · Handball masculin · Bronze · 25 novembre 2025 · Tokyo</div>
+        <div class="rbn-teams">
+          <div class="rbn-tnm">🇭🇷 Croatie</div>
+          <div style="display:flex;align-items:center;gap:8px;"><span class="rbn-sc">38</span><span class="rbn-sep">—</span><span class="rbn-sc">30</span></div>
+          <div class="rbn-tnm">🇫🇷 France 🥉</div>
+        </div>
+        <div class="rbn-detail">🥇 Croatie · 🥈 Allemagne · 🥉 France · 4e Serbie</div>
+      </div>
+      <h3 style="font-size:17px;font-weight:700;margin:24px 0 14px;">📊 Groupe B · Phase de groupes</h3>
+      <table class="tbl" style="margin-bottom:24px;">
+        <thead><tr><th>#</th><th>Équipe</th><th>J</th><th>V</th><th>D</th><th>+/-</th><th>Pts</th></tr></thead>
+        <tbody>
+          <tr><td class="trk trk1">1</td><td class="tteam">🇭🇷 Croatie</td><td>3</td><td>3</td><td>0</td><td>+36</td><td class="tpts">6</td></tr>
+          <tr><td class="trk trk2">2</td><td class="tteam">🇫🇷 France</td><td>3</td><td>2</td><td>1</td><td>+23</td><td class="tpts">4</td></tr>
+          <tr><td class="trk trk3">3</td><td class="tteam">🇷🇸 Serbie</td><td>3</td><td>1</td><td>2</td><td>-15</td><td class="tpts">2</td></tr>
+          <tr><td class="trk">4</td><td class="tteam">🇰🇪 Kenya</td><td>3</td><td>0</td><td>3</td><td>-44</td><td class="tpts">0</td></tr>
+        </tbody>
+      </table>
+      <div class="vp"><div class="play">▶</div><div class="vcap">Handball sourd · France 🥉 · Deaflympics Tokyo 2025</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : ATHLÉTISME ===================== -->
+<div id="page-athletisme" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏃 Discipline</div>
+      <h1 class="pttl">Athlétisme Sourd</h1>
+      <p class="psub">Paméra Losange, double championne des Deaflympics 2025 — la fierté du sprint sourd français.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div style="background:var(--bg3);border:1px solid #FFD700;border-radius:12px;padding:24px;margin-bottom:26px;display:flex;align-items:center;gap:20px;">
+      <div style="font-size:52px;">🥇🥇</div>
+      <div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:4px;">Paméra Losange</div>
+        <div style="color:#FFD700;font-weight:700;margin-bottom:4px;">Double championne Deaflympics 2025 · Tokyo</div>
+        <div style="font-size:14px;color:var(--txt2);">100m · 200m · Novembre 2025 · Japon</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div class="vp"><div class="play">▶</div><div class="vcap">Finale 100m · Paméra Losange 🥇 · Tokyo 2025</div></div>
+      <div class="vp"><div class="play">▶</div><div class="vcap">Finale 200m · Paméra Losange 🥇 · Tokyo 2025</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : CYCLISME ===================== -->
+<div id="page-cyclisme" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🚴 Discipline</div>
+      <h1 class="pttl">Cyclisme Sourd</h1>
+      <p class="psub">Paul Servières, Louis Gobet, Clément Allegranti — la relève du cyclisme sourd français.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px;">
+      <div class="uc"><div class="uc-comp">🚴 Louis Gobet</div><div style="font-size:13px;color:var(--txt2);margin-top:6px;">4e place · Sprint sur piste · Tokyo 2025</div></div>
+      <div class="uc"><div class="uc-comp">🚴 Clément Allegranti</div><div style="font-size:13px;color:var(--txt2);margin-top:6px;">5e place · Sprint · 10e · Course aux points · Tokyo 2025</div></div>
+      <div class="uc"><div class="uc-comp">🚴 Paul Servières</div><div style="font-size:13px;color:var(--txt2);margin-top:6px;">Délégation française · Deaflympics 2025</div></div>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">Sprint sur piste · Louis Gobet · 4e place · Deaflympics Tokyo 2025</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : NATATION ===================== -->
+<div id="page-natation" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏊 Discipline</div>
+      <h1 class="pttl">Natation Sourde</h1>
+      <p class="psub">Manon Haab et les nageurs français aux Deaflympics de Tokyo 2025 — sur 5 épreuves individuelles.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="vp"><div class="play">▶</div><div class="vcap">400m nage libre · Manon Haab · 12e place · Deaflympics Tokyo 2025</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : JUDO ===================== -->
+<div id="page-judo" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🥋 Discipline</div>
+      <h1 class="pttl">Judo Sourd</h1>
+      <p class="psub">Le judo sourd français aux compétitions internationales — Deaflympics et championnats d'Europe.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="vp"><div class="play">▶</div><div class="vcap">Judo sourd · Thomas Estel · Deaflympics Tokyo 2025</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : FOOTBALL FÉMININ ===================== -->
+<div id="page-football-f" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">⚽ Football · ♀ Féminin</div>
+      <h1 class="pttl">Football Sourd Féminin</h1>
+      <p class="psub">L'équipe de France féminine de football sourd et les clubs féminins en compétitions européennes — DCL et Championnats nationaux.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">DCL Football Féminin</button>
+      <button class="spt">Champ. de France</button>
+      <button class="spt">Équipe de France</button>
+      <button class="spt">Vidéos</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">⚽</div>
+      <div><div class="comp-nm">DCL Football Féminin</div><div class="comp-sb">Compétition européenne de football sourd féminin</div></div>
+      <div class="comp-bx">CSSR Reims · Finaliste 2025</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:24px;margin-bottom:24px;">
+      <p style="color:var(--txt2);line-height:1.8;">Le football sourd féminin est en plein essor en France. Le CSS Reims Féminin a notamment atteint la finale de la DCL Féminine récemment, portant haut les couleurs du football sourd tricolore au niveau européen.</p>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">DCL Football Féminin — Temps forts de la saison</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : FUTSAL FÉMININ ===================== -->
+<div id="page-futsal-f" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏟️ Futsal · ♀ Féminin</div>
+      <h1 class="pttl">Futsal Sourd Féminin</h1>
+      <p class="psub">La DCL Futsal Féminin 2025 s'est jouée à Toulouse — retour sur une édition historique en France.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">DCL Futsal Féminin</button>
+      <button class="spt">Champ. de France</button>
+      <button class="spt">Équipe de France</button>
+      <button class="spt">Vidéos</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">🏟️</div>
+      <div><div class="comp-nm">DCL Futsal Féminin 2025 · Toulouse</div><div class="comp-sb">Édition 2025 organisée en France 🇫🇷</div></div>
+      <div class="comp-bx">Résultats disponibles</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div class="vp"><div class="play">▶</div><div class="vcap">DCL Futsal Féminin 2025 · Toulouse — Résumé de la finale</div></div>
+      <div class="vp"><div class="play">▶</div><div class="vcap">DCL Futsal Féminin 2027 · Guimarães — Présentation</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : VOLLEY-BALL MASCULIN ===================== -->
+<div id="page-volleyball" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏐 Volley-ball · ♂ Masculin</div>
+      <h1 class="pttl">Volley-ball Sourd Masculin</h1>
+      <p class="psub">Le volley-ball sourd masculin en France et sur la scène internationale — Deaflympics et compétitions européennes.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">Compétitions</button>
+      <button class="spt">Équipe de France</button>
+      <button class="spt">Vidéos</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">🏐</div>
+      <div><div class="comp-nm">Volley-ball Sourd · Compétitions internationales</div><div class="comp-sb">Deaflympics · Championnats du monde · Championnats d'Europe</div></div>
+      <div class="comp-bx">Prochains Deaflympics 2029</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:24px;margin-bottom:24px;">
+      <p style="color:var(--txt2);line-height:1.8;">La délégation française de volley-ball sourd masculin a participé aux Deaflympics de Tokyo 2025. La discipline réunit des équipes de 6 joueurs selon les règles officielles de la FIVB, avec l'interdiction du port d'appareils auditifs en compétition.</p>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">Volley-ball sourd · Équipe de France Masculine · Deaflympics Tokyo 2025</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : VOLLEY-BALL FÉMININ ===================== -->
+<div id="page-volleyball-f" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏐 Volley-ball · ♀ Féminin</div>
+      <h1 class="pttl">Volley-ball Sourd Féminin</h1>
+      <p class="psub">Le volley-ball sourd féminin en France et sur la scène internationale — résultats, compétitions et portraits d'athlètes.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">Compétitions</button>
+      <button class="spt">Équipe de France</button>
+      <button class="spt">Vidéos</button>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">🏐</div>
+      <div><div class="comp-nm">Volley-ball Sourd Féminin · International</div><div class="comp-sb">Deaflympics · Championnats d'Europe</div></div>
+      <div class="comp-bx">Prochains Deaflympics 2029</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:24px;margin-bottom:24px;">
+      <p style="color:var(--txt2);line-height:1.8;">L'équipe de France féminine de volley-ball sourd participe aux grandes compétitions internationales organisées par l'ICSD. La discipline est l'une des plus populaires aux Deaflympics avec une participation croissante des nations européennes.</p>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">Volley-ball sourd · Équipe de France Féminine · Highlights</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : SKI ALPIN ===================== -->
+<div id="page-ski-alpin" class="page">
+  <div class="phero" style="background:linear-gradient(135deg,#001230 0%,#001A5A 60%,#00236E 100%);">
+    <div class="phero-c">
+      <div class="ptag">⛷️ Sport d'hiver</div>
+      <h1 class="pttl">Ski Alpin Sourd</h1>
+      <p class="psub">Nicolas Sarremejane et Thomas Luxcey, figures emblématiques du ski alpin sourd français — champions des Deaflympics d'hiver.</p>
+    </div>
+  </div>
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on">Deaflympics 2024</button>
+      <button class="spt">Palmarès</button>
+      <button class="spt">Équipe de France</button>
+    </div>
+  </div>
+  <div class="sec">
+    <!-- VEDETTES -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px;">
+      <div style="background:var(--bg3);border:1px solid #FFD700;border-radius:12px;padding:24px;display:flex;align-items:center;gap:16px;">
+        <div style="font-size:44px;">⛷️🥇</div>
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:3px;">Nicolas Sarremejane</div>
+          <div style="color:#FFD700;font-weight:700;font-size:13px;margin-bottom:4px;">Porte-drapeau · Multi-médaillé</div>
+          <div style="font-size:13px;color:var(--txt2);">🥇 Super-G · Deaflympics 2024 Erzurum<br>🥈 Géant, Slalom (2024) · 🥈🥈🥈🥉 (2019)</div>
+        </div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid #C0C0C0;border-radius:12px;padding:24px;display:flex;align-items:center;gap:16px;">
+        <div style="font-size:44px;">⛷️🥉</div>
+        <div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:3px;">Thomas Luxcey</div>
+          <div style="color:#C0C0C0;font-weight:700;font-size:13px;margin-bottom:4px;">Ski alpin · Méribel</div>
+          <div style="font-size:13px;color:var(--txt2);">🥉 Super-G · Deaflympics 2024 Erzurum<br>🥉 Super-G · Deaflympics 2019 Sondrio</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RÉSULTATS 2024 -->
+    <div class="comp-hd" style="margin-bottom:20px;">
+      <div class="comp-ico">⛷️</div>
+      <div><div class="comp-nm">Deaflympics d'hiver 2024 · Ski alpin</div><div class="comp-sb">Erzurum, Turquie · 2-12 mars 2024</div></div>
+      <div class="comp-bx">France : 🥇🥈🥈🥉</div>
+    </div>
+
+    <table class="tbl" style="margin-bottom:32px;">
+      <thead><tr><th>Épreuve</th><th>Athlète</th><th>Résultat</th><th>Médaille</th></tr></thead>
+      <tbody>
+        <tr><td>Super-G</td><td class="tteam">Nicolas Sarremejane</td><td>1er</td><td class="tpts" style="color:#FFD700;">🥇 Or</td></tr>
+        <tr><td>Super-G</td><td class="tteam">Thomas Luxcey</td><td>3e</td><td class="tpts" style="color:#CD7F32;">🥉 Bronze</td></tr>
+        <tr><td>Géant</td><td class="tteam">Nicolas Sarremejane</td><td>2e</td><td class="tpts" style="color:#C0C0C0;">🥈 Argent</td></tr>
+        <tr><td>Slalom</td><td class="tteam">Nicolas Sarremejane</td><td>2e</td><td class="tpts" style="color:#C0C0C0;">🥈 Argent</td></tr>
+        <tr><td>Combiné alpin</td><td class="tteam">Nicolas Sarremejane</td><td>Participé</td><td style="color:var(--txt3);">—</td></tr>
+        <tr><td>Toutes épreuves</td><td class="tteam">Mélanie Rembaud</td><td>Participé</td><td style="color:var(--accent);">1re Française !</td></tr>
+      </tbody>
+    </table>
+
+    <div class="hbox"><p>"Je ne pensais pas à la victoire. J'avais fait quelques fautes sur mon parcours... C'est une très belle surprise quand j'ai vu mon nom en haut du classement." — Nicolas Sarremejane, champion Super-G Erzurum 2024</p></div>
+
+    <div style="margin-top:24px;background:rgba(0,71,238,.08);border:1px solid var(--brd);border-radius:10px;padding:18px;">
+      <div style="font-size:13px;font-weight:700;color:var(--blue-l);margin-bottom:8px;">📅 Prochain grand rendez-vous</div>
+      <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Deaflympics d'hiver 2027 · Innsbruck, Autriche</div>
+      <div style="font-size:13px;color:var(--txt2);">Janvier 2027 · Préparation en cours · Une seule saison de qualification</div>
+    </div>
+
+    <div class="vp" style="margin-top:24px;"><div class="play">▶</div><div class="vcap">Nicolas Sarremejane · Super-G 🥇 · Deaflympics Erzurum 2024</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : SKI NORDIQUE ===================== -->
+<div id="page-ski-nordique" class="page">
+  <div class="phero" style="background:linear-gradient(135deg,#001230 0%,#001A5A 60%,#00236E 100%);">
+    <div class="phero-c">
+      <div class="ptag">🎿 Sport d'hiver</div>
+      <h1 class="pttl">Ski Nordique Sourd</h1>
+      <p class="psub">Antoine Collomb-Patton et Loïc Cros — première représentation française en ski nordique sourd depuis 1991, aux Deaflympics d'Erzurum 2024.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div style="background:rgba(0,71,238,.08);border:1px solid var(--brd2);border-radius:12px;padding:22px;margin-bottom:28px;">
+      <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:8px;">🏆 Historique · Retour après 33 ans d'absence</div>
+      <p style="font-size:14px;color:var(--txt2);line-height:1.7;">Pour la première fois depuis 1991, la France a engagé des skieurs nordiques aux Deaflympics d'hiver. Antoine Collomb-Patton et Loïc Cros ont représenté les couleurs françaises à Erzurum — une page historique pour le ski nordique sourd tricolore.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+      <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:22px;">
+        <div style="font-size:32px;margin-bottom:8px;">🎿</div>
+        <div style="font-size:17px;font-weight:700;margin-bottom:4px;">Antoine Collomb-Patton</div>
+        <div style="font-size:13px;color:var(--blue-l);font-weight:600;margin-bottom:6px;">Ski de fond</div>
+        <div style="font-size:13px;color:var(--txt2);line-height:1.7;">Premiers Deaflympics d'hiver · Erzurum 2024<br>Programme : 5km/10km, sprint, mass start</div>
+      </div>
+      <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:22px;">
+        <div style="font-size:32px;margin-bottom:8px;">🎿</div>
+        <div style="font-size:17px;font-weight:700;margin-bottom:4px;">Loïc Cros</div>
+        <div style="font-size:13px;color:var(--blue-l);font-weight:600;margin-bottom:6px;">Ski de fond</div>
+        <div style="font-size:13px;color:var(--txt2);line-height:1.7;">Premiers Deaflympics d'hiver · Erzurum 2024<br>Programme : 5km/10km, sprint, mass start</div>
+      </div>
+    </div>
+
+    <div style="background:rgba(0,71,238,.08);border:1px solid var(--brd);border-radius:10px;padding:18px;margin-bottom:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--blue-l);margin-bottom:8px;">📅 Prochain grand rendez-vous</div>
+      <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;">Deaflympics d'hiver 2027 · Innsbruck, Autriche</div>
+      <div style="font-size:13px;color:var(--txt2);">Janvier 2027 · Épreuves nordiques au programme</div>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">Ski nordique sourd · Antoine Collomb-Patton & Loïc Cros · Deaflympics Erzurum 2024</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : SNOWBOARD ===================== -->
+<div id="page-snowboard" class="page">
+  <div class="phero" style="background:linear-gradient(135deg,#001230 0%,#001A5A 60%,#00236E 100%);">
+    <div class="phero-c">
+      <div class="ptag">🏂 Sport d'hiver</div>
+      <h1 class="pttl">Snowboard Sourd</h1>
+      <p class="psub">Le snowboard sourd aux Deaflympics — banked slalom, parallèle, slopestyle pour les représentants français.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="comp-hd">
+      <div class="comp-ico">🏂</div>
+      <div><div class="comp-nm">Snowboard · Deaflympics d'hiver</div><div class="comp-sb">Épreuves : Banked Slalom · Parallèle · Slopestyle</div></div>
+      <div class="comp-bx">Deaflympics 2027 · Innsbruck</div>
+    </div>
+    <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:12px;padding:22px;margin-bottom:24px;">
+      <p style="font-size:14px;color:var(--txt2);line-height:1.8;">Le snowboard sourd évolue dans un programme Deaflympics en constante évolution. Depuis 2024, les épreuves se concentrent sur le banked slalom et le parallèle, après la suppression du border cross et du big air. La France suit de près ce secteur pour préparer sa sélection en vue des Deaflympics d'hiver 2027 à Innsbruck.</p>
+    </div>
+    <div class="vp"><div class="play">▶</div><div class="vcap">Snowboard sourd · Deaflympics d'hiver · Highlights</div></div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : ÉQUIPES DE FRANCE ===================== -->
+<div id="page-equipes-france" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🇫🇷 Sélections nationales</div>
+      <h1 class="pttl">Équipes de France<br><span style="color:var(--blue-l);">Sport Sourd</span></h1>
+      <p class="psub">Football, futsal, handball, athlétisme, cyclisme, natation... Toutes les équipes nationales sourdes, leurs résultats et leurs prochaines échéances.</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-hd"><h2 class="sec-ttl">Nos <span>équipes</span></h2></div>
+    <div class="tg">
+      <div class="tc" onclick="go('football')">
+        <div class="tc-hd">
+          <div class="tc-medal">🥉 Deaflympics 2025</div>
+          <div class="tc-flag">⚽</div>
+          <div class="tc-nm">Équipe de France Football</div>
+          <div class="tc-sp">Football sourd · 11 joueurs</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">🥇</div><div class="tsl">Euro 2024</div></div>
+            <div class="tstat"><div class="tsv">🥉</div><div class="tsl">Tokyo 25</div></div>
+            <div class="tstat"><div class="tsv">16</div><div class="tsl">Joueurs</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">DCL 2026 · Manisa 🇹🇷</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('futsal')">
+        <div class="tc-hd">
+          <div class="tc-medal">🥈 DCL 2025</div>
+          <div class="tc-flag">🏟️</div>
+          <div class="tc-nm">Futsal Féminin France</div>
+          <div class="tc-sp">Futsal sourd · 5v5</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">🥈</div><div class="tsl">DCL 2025</div></div>
+            <div class="tstat"><div class="tsv">🇫🇷</div><div class="tsl">Toulouse</div></div>
+            <div class="tstat"><div class="tsv">12</div><div class="tsl">Joueuses</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">DCL Futsal 2027 · Guimarães 🇵🇹</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('handball')">
+        <div class="tc-hd">
+          <div class="tc-medal">🥉 Deaflympics 2025</div>
+          <div class="tc-flag">🤾</div>
+          <div class="tc-nm">Équipe de France Handball</div>
+          <div class="tc-sp">Handball sourd · 7 joueurs</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">🥉</div><div class="tsl">Tokyo 25</div></div>
+            <div class="tstat"><div class="tsv">🥈</div><div class="tsl">Grpe B</div></div>
+            <div class="tstat"><div class="tsv">14</div><div class="tsl">Joueurs</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">Championnats d'Europe 2027</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('athletisme')">
+        <div class="tc-hd">
+          <div class="tc-medal">🥇🥇 2 titres Tokyo</div>
+          <div class="tc-flag">🏃</div>
+          <div class="tc-nm">Athlétisme France</div>
+          <div class="tc-sp">Athlétisme sourd · Piste & champ</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv" style="color:#FFD700;">2</div><div class="tsl">🥇 Tokyo</div></div>
+            <div class="tstat"><div class="tsv">🌟</div><div class="tsl">Losange</div></div>
+            <div class="tstat"><div class="tsv">8</div><div class="tsl">Athlètes</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Star : <span class="tnxt-d">Paméra Losange 🥇🥇</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('cyclisme')">
+        <div class="tc-hd">
+          <div class="tc-flag">🚴</div>
+          <div class="tc-nm">Cyclisme France</div>
+          <div class="tc-sp">Piste & Route · Deaflympics</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">4e</div><div class="tsl">Gobet</div></div>
+            <div class="tstat"><div class="tsv">5e</div><div class="tsl">Allegranti</div></div>
+            <div class="tstat"><div class="tsv">4</div><div class="tsl">Coureurs</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">Deaflympics 2029</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('natation')">
+        <div class="tc-hd">
+          <div class="tc-flag">🏊</div>
+          <div class="tc-nm">Natation France</div>
+          <div class="tc-sp">Natation sourde · Multiples épreuves</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">12e</div><div class="tsl">400m NL</div></div>
+            <div class="tstat"><div class="tsv">5</div><div class="tsl">Épreuves</div></div>
+            <div class="tstat"><div class="tsv">3</div><div class="tsl">Nageurs</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Athlète : <span class="tnxt-d">Manon Haab 🏊</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('volleyball')">
+        <div class="tc-hd">
+          <div class="tc-flag">🏐</div>
+          <div class="tc-nm">Volley-ball France · ♂</div>
+          <div class="tc-sp">Volley-ball sourd masculin · 6v6</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">🌍</div><div class="tsl">Tokyo 25</div></div>
+            <div class="tstat"><div class="tsv">6</div><div class="tsl">Joueurs</div></div>
+            <div class="tstat"><div class="tsv">12</div><div class="tsl">Sélectionnés</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">Deaflympics 2029</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('volleyball-f')">
+        <div class="tc-hd">
+          <div class="tc-flag">🏐</div>
+          <div class="tc-nm">Volley-ball France · ♀</div>
+          <div class="tc-sp">Volley-ball sourd féminin · 6v6</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">🌍</div><div class="tsl">Deafl.</div></div>
+            <div class="tstat"><div class="tsv">6</div><div class="tsl">Joueuses</div></div>
+            <div class="tstat"><div class="tsv">12</div><div class="tsl">Sélectionnées</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">Deaflympics 2029</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPORTS D'HIVER -->
+    <div class="sec-hd" style="margin-top:48px;">
+      <h2 class="sec-ttl">Sports <span>d'hiver</span></h2>
+      <span class="sec-lnk" style="display:flex;align-items:center;gap:6px;">❄️ Deaflympics 2027 · Innsbruck</span>
+    </div>
+    <div style="background:rgba(0,71,238,.07);border:1px solid var(--brd);border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px;">
+      <div style="font-size:28px;">❄️</div>
+      <div style="font-size:14px;color:var(--txt2);line-height:1.6;">Les Deaflympics d'hiver 2027 auront lieu à <strong style="color:#fff;">Innsbruck, Autriche</strong> en janvier 2027. Une seule saison de qualification pour préparer ce rendez-vous majeur. La France vise des médailles après son excellent bilan 2024 à Erzurum (4 médailles en ski alpin).</div>
+    </div>
+    <div class="tg">
+      <div class="tc" onclick="go('ski-alpin')">
+        <div class="tc-hd">
+          <div class="tc-medal" style="background:rgba(255,215,0,.15);border-color:rgba(255,215,0,.4);color:#FFD700;">🥇 Erzurum 2024</div>
+          <div class="tc-flag">⛷️</div>
+          <div class="tc-nm">Ski Alpin Sourd</div>
+          <div class="tc-sp">Épreuves alpines · Super-G, Géant, Slalom, Combiné</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv" style="color:#FFD700;">1</div><div class="tsl">🥇 2024</div></div>
+            <div class="tstat"><div class="tsv" style="color:#C0C0C0;">2</div><div class="tsl">🥈 2024</div></div>
+            <div class="tstat"><div class="tsv" style="color:#CD7F32;">1</div><div class="tsl">🥉 2024</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Stars : <span class="tnxt-d">N. Sarremejane · T. Luxcey ⛷️</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('ski-nordique')">
+        <div class="tc-hd">
+          <div class="tc-flag">🎿</div>
+          <div class="tc-nm">Ski Nordique Sourd</div>
+          <div class="tc-sp">Ski de fond · Sprint, Mass start, Distance</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">2</div><div class="tsl">Fondeurs</div></div>
+            <div class="tstat"><div class="tsv">1991</div><div class="tsl">Retour !</div></div>
+            <div class="tstat"><div class="tsv">3</div><div class="tsl">Épreuves</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Retour historique : <span class="tnxt-d">Collomb-Patton · Cros 🎿</span></div>
+        </div>
+      </div>
+      <div class="tc" onclick="go('snowboard')">
+        <div class="tc-hd">
+          <div class="tc-flag">🏂</div>
+          <div class="tc-nm">Snowboard Sourd</div>
+          <div class="tc-sp">Banked Slalom · Parallèle · Slopestyle</div>
+        </div>
+        <div class="tc-bd">
+          <div class="tstats">
+            <div class="tstat"><div class="tsv">3</div><div class="tsl">Épreuves</div></div>
+            <div class="tstat"><div class="tsv">🏂</div><div class="tsl">2027</div></div>
+            <div class="tstat"><div class="tsv">🇦🇹</div><div class="tsl">Innsbruck</div></div>
+          </div>
+          <hr class="tdiv">
+          <div class="tnxt">Prochaine : <span class="tnxt-d">Deaflympics 2027 · Autriche</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : DEAFLYMPICS ===================== -->
+<div id="page-deaflympics" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🌍 Compétition internationale</div>
+      <h1 class="pttl">Deaflympics</h1>
+      <p class="psub">Les Jeux Olympiques des sourds — fondés à Paris en 1924, organisés tous les 4 ans par l'ICSD (Comité International des Sports des Sourds).</p>
+    </div>
+  </div>
+  <div class="sec">
+    <div class="sec-hd"><h2 class="sec-ttl">Deaflympics <span>2025 · Tokyo</span></h2></div>
+    <div class="dstats">
+      <div class="dstat"><div class="dstat-v">3 070</div><div class="dstat-l">Athlètes · Record</div></div>
+      <div class="dstat"><div class="dstat-v">81</div><div class="dstat-l">Nations</div></div>
+      <div class="dstat"><div class="dstat-v">21</div><div class="dstat-l">Disciplines</div></div>
+      <div class="dstat"><div class="dstat-v" style="color:var(--accent);">9</div><div class="dstat-l">Médailles 🇫🇷</div></div>
+    </div>
+    <div class="ac" onclick="go('article-deaflympics')" style="flex-direction:row;max-width:100%;margin-bottom:28px;">
+      <div class="ath" style="width:40%;min-height:200px;">
+        <div class="athi" style="background:linear-gradient(135deg,#001230,#001A5A);">
+          <span class="athi-ico">🏅</span><div class="ath-ov"></div>
+        </div>
+        <div class="ath-badge" style="background:#FFD700;color:#000;">Record de participation</div>
+      </div>
+      <div class="ab">
+        <div class="acat">Bilan · Équipe de France</div>
+        <div class="att" style="font-size:21px;">France : 9 médailles, 4 en or — Tokyo 2025, le bilan historique</div>
+        <div class="aex">Paméra Losange en vedette avec le doublé 100m-200m. Handball et Football en bronze, Golf en argent. La délégation tricolore de 73 athlètes sur 11 disciplines.</div>
+        <div class="vp" style="height:80px;aspect-ratio:auto;margin:12px 0;">
+          <div class="play" style="width:35px;height:35px;font-size:14px;">▶</div>
+          <div class="vcap" style="font-size:11px;">Bilan délégation française · Deaflympics Tokyo 2025</div>
+        </div>
+        <div class="ameta"><span>📅 27 nov. 2025</span></div>
+      </div>
+    </div>
+    <h3 style="font-size:17px;font-weight:700;margin-bottom:14px;">📅 Prochaine édition</h3>
+    <div class="uc" style="max-width:400px;">
+      <div class="uc-comp">🌍 Deaflympics 2029</div>
+      <div class="uc-date">📍 Lieu à déterminer · 2029</div>
+      <div style="font-size:13px;color:var(--txt2);margin-top:8px;">Prochains Jeux des Sourds · Toutes les nations participantes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="fmain">
+    <div>
+      <div class="fbrand">Sport<span class="logo-pi">'Pi</span></div>
+      <div class="ftag">Le premier média dédié au sport sourd en France. Vidéos sous-titrées, signées, accessibles à tous — pour et par la communauté.</div>
+      <div class="fsoc">
+        <div class="fsb" title="Instagram">📷</div>
+        <div class="fsb" title="YouTube">▶</div>
+        <div class="fsb" title="Twitter/X">𝕏</div>
+        <div class="fsb" title="Facebook">f</div>
+        <div class="fsb" title="TikTok">♪</div>
+      </div>
+    </div>
+    <div>
+      <div class="fct">Sports</div>
+      <div class="flinks">
+        <div class="fl" onclick="go('football')">⚽ Football</div>
+        <div class="fl" onclick="go('futsal')">🏟️ Futsal</div>
+        <div class="fl" onclick="go('handball')">🤾 Handball</div>
+        <div class="fl" onclick="go('volleyball')">🏐 Volley-ball</div>
+        <div class="fl" onclick="go('athletisme')">🏃 Athlétisme</div>
+        <div class="fl" onclick="go('cyclisme')">🚴 Cyclisme</div>
+        <div class="fl" onclick="go('natation')">🏊 Natation</div>
+        <div class="fl" onclick="go('ski-alpin')">⛷️ Ski alpin</div>
+        <div class="fl" onclick="go('ski-nordique')">🎿 Ski nordique</div>
+        <div class="fl" onclick="go('snowboard')">🏂 Snowboard</div>
+      </div>
+    </div>
+    <div>
+      <div class="fct">Compétitions</div>
+      <div class="flinks">
+        <div class="fl" onclick="go('deaflympics')">🌍 Deaflympics</div>
+        <div class="fl" onclick="go('football')">🏆 DCL Football</div>
+        <div class="fl" onclick="go('futsal')">🏆 DCL Futsal</div>
+        <div class="fl">🇫🇷 Championnats de France</div>
+        <div class="fl">🌐 Championnats du Monde</div>
+      </div>
+    </div>
+    <div>
+      <div class="fct">À propos</div>
+      <div class="flinks">
+        <div class="fl">Qui sommes-nous ?</div>
+        <div class="fl">Notre équipe</div>
+        <div class="fl">Contact</div>
+        <div class="fl">Accessibilité</div>
+        <div class="fl">Mentions légales</div>
+      </div>
+    </div>
+  </div>
+  <div class="fbot">
+    <div>© 2026 Sport'Pi — Le média du sport sourd. Tous droits réservés.</div>
+    <div class="fpwa">📱 Application PWA disponible</div>
+  </div>
+</footer>
+
+<script>
+  // ===== HANDBALL TABS =====
+  function showHbTab(idx, btn) {
+    document.querySelectorAll('.hb-tab').forEach(t => t.style.display = 'none');
+    const t = document.getElementById('hbt-' + idx);
+    if(t) t.style.display = 'block';
+    if(btn) {
+      btn.closest('.sptabs').querySelectorAll('.spt').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+    }
+  }
+
+  // ===== PAGE NAVIGATION =====
+  const ALL = ['home','article-dcl','article-deaflympics','football','football-f','futsal','futsal-f','handball','volleyball','volleyball-f','athletisme','cyclisme','natation','judo','ski-alpin','ski-nordique','snowboard','equipes-france','deaflympics'];
+  const NAV_MAP = {home:'nv-home','equipes-france':'nv-edf',deaflympics:'nv-deaf',football:'nv-sports','football-f':'nv-sports',futsal:'nv-sports','futsal-f':'nv-sports',handball:'nv-sports',volleyball:'nv-sports','volleyball-f':'nv-sports',athletisme:'nv-sports',cyclisme:'nv-sports',natation:'nv-sports',judo:'nv-sports','ski-alpin':'nv-hiver','ski-nordique':'nv-hiver',snowboard:'nv-hiver'};
+
+  function go(id) {
+    ALL.forEach(p => {
+      const el = document.getElementById('page-'+p);
+      if(el) { el.classList.remove('on','fi'); }
+    });
+    const tgt = document.getElementById('page-'+id);
+    if(tgt) {
+      tgt.classList.add('on');
+      void tgt.offsetWidth; // reflow
+      tgt.classList.add('fi');
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.querySelectorAll('.nl').forEach(l => l.classList.remove('on'));
+    if(NAV_MAP[id]) { const n = document.getElementById(NAV_MAP[id]); if(n) n.classList.add('on'); }
+  }
+
+  // ===== SPORT TABS =====
+  document.querySelectorAll('.spt').forEach(t => {
+    t.addEventListener('click', () => {
+      t.closest('.sptabs').querySelectorAll('.spt').forEach(x => x.classList.remove('on'));
+      t.classList.add('on');
+    });
+  });
+
+  // ===== INIT =====
+  document.getElementById('page-home').classList.add('fi');
+</script>
+</body>
+</html>
