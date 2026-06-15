@@ -68,8 +68,8 @@
     .btn-srch{background:none;border:none;color:var(--txt2);padding:8px;border-radius:6px;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;}
     .btn-srch:hover{color:#fff;background:rgba(255,255,255,.1);}
     .btn-srch svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
-    .btn-sub{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;transition:all .2s;letter-spacing:.3px;}
-    .btn-sub:hover{background:var(--accent-h);transform:translateY(-1px);}
+    .btn-sub{background:var(--accent);color:#fff;border:2px solid transparent;padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;transition:background .22s, color .22s, border-color .22s, transform .22s, box-shadow .22s;letter-spacing:.3px;cursor:pointer;}
+    .btn-sub:hover{background:#faf8f6;color:var(--accent);border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,55,95,.25);}
 
     /* ===== PAGE SYSTEM ===== */
     .page{display:none;}
@@ -290,8 +290,68 @@
 
     /* ===== BG STRIP ===== */
     .strip{background:var(--bg2);border-top:1px solid var(--brd);border-bottom:1px solid var(--brd);}
+    /* strip clair */
+    .strip-light{background:#fcfcfc;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8;}
+    .strip-light .sec-ttl{color:#0a1633;}
+    .strip-light .sec-ttl span{color:var(--blue);}
+    .strip-light .sec-lnk{color:var(--blue);}
+    .strip-light .sec-lnk:hover{color:#0a1633;}
+    .strip-light .uc{background:#fff;border-color:#e2e8f0;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+    .strip-light .uc:hover{border-color:var(--blue);box-shadow:0 6px 20px rgba(0,71,238,.12);transform:translateY(-2px);}
+    .strip-light .uc-comp{color:var(--blue);}
+    .strip-light .uc-date{color:#64748b;}
+    .strip-light .tn{color:#1e293b;font-weight:600;}
+    .strip-light .tf{filter:none;}
+    .strip-light .vsb{color:#64748b;border-color:#cbd5e1;}
 
     /* ===== RESPONSIVE ===== */
+
+    /* --- HAMBURGER BUTTON --- */
+    .mob-btn{display:none;background:none;border:none;color:var(--txt2);padding:8px;border-radius:6px;cursor:pointer;transition:all .2s;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:38px;height:38px;}
+    .mob-btn:hover{background:rgba(255,255,255,.1);color:#fff;}
+    .mob-btn span{display:block;width:20px;height:2px;background:currentColor;border-radius:2px;transition:all .3s;}
+    /* croix quand ouvert */
+    .mob-btn.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .mob-btn.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+    .mob-btn.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+    /* --- OVERLAY --- */
+    .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:101;backdrop-filter:blur(3px);}
+    .mob-overlay.open{display:block;}
+
+    /* --- DRAWER --- */
+    .mob-drawer{position:fixed;top:0;left:0;width:82%;max-width:320px;height:100%;background:#001A5A;z-index:102;transform:translateX(-100%);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;display:flex;flex-direction:column;border-right:1px solid var(--brd);}
+    .mob-drawer.open{transform:translateX(0);}
+
+    /* drawer header */
+    .mob-drawer-hd{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--brd);flex-shrink:0;}
+    .mob-drawer-logo{font-size:20px;font-weight:700;cursor:pointer;}
+    .mob-drawer-logo .logo-pi{color:var(--accent);}
+    .mob-close{background:none;border:none;color:var(--txt2);font-size:22px;cursor:pointer;padding:4px 8px;line-height:1;}
+
+    /* drawer nav items */
+    .mob-nav{flex:1;padding:12px 0;}
+    .mob-item{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;font-size:15px;font-weight:500;color:var(--txt2);cursor:pointer;transition:all .2s;border:none;background:none;width:100%;text-align:left;}
+    .mob-item:hover,.mob-item.on{color:#fff;background:rgba(0,71,238,.15);}
+    .mob-item.on{color:var(--blue-l);}
+    .mob-item-ico{margin-right:10px;font-size:17px;}
+    .mob-chevron{font-size:11px;color:var(--txt3);transition:transform .25s;}
+    .mob-chevron.open{transform:rotate(180deg);}
+
+    /* accordéon sous-menu */
+    .mob-sub{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+    .mob-sub.open{max-height:600px;}
+    .mob-sub-item{display:flex;align-items:center;gap:10px;padding:11px 20px 11px 40px;font-size:14px;color:var(--txt2);cursor:pointer;transition:all .2s;border:none;background:none;width:100%;text-align:left;}
+    .mob-sub-item:hover{color:#fff;background:rgba(0,71,238,.1);}
+    .mob-sub-item-ico{font-size:16px;}
+    .mob-sub-sub{display:flex;align-items:center;gap:8px;padding:9px 20px 9px 56px;font-size:13px;color:var(--txt3);cursor:pointer;transition:all .2s;border:none;background:none;width:100%;text-align:left;}
+    .mob-sub-sub:hover{color:var(--txt2);background:rgba(255,255,255,.04);}
+    .mob-sep{border:none;border-top:1px solid var(--brd);margin:6px 20px;}
+
+    /* drawer footer */
+    .mob-drawer-ft{padding:16px 20px;border-top:1px solid var(--brd);flex-shrink:0;}
+    .mob-drawer-ft .btn-sub{width:100%;padding:12px;font-size:14px;border-radius:8px;}
+
     @media(max-width:900px){
       .hero-c{grid-template-columns:1fr;}
       .sw{display:none;}
@@ -302,6 +362,7 @@
       .tg{grid-template-columns:1fr 1fr;}
       .fmain{grid-template-columns:1fr 1fr;}
       .nav-links{display:none;}
+      .mob-btn{display:flex;}
       .dstats{grid-template-columns:repeat(2,1fr);}
       .promo{grid-template-columns:1fr;}
     }
@@ -391,10 +452,86 @@
     </div>
     <div class="nav-r">
       <button class="btn-srch" title="Rechercher"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-      <button class="btn-sub">S'abonner</button>
+      <button class="btn-sub">Se connecter</button>
+      <button class="mob-btn" id="mobBtn" onclick="toggleMob()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 </header>
+
+<!-- ===== MENU MOBILE DRAWER ===== -->
+<div class="mob-overlay" id="mobOverlay" onclick="closeMob()"></div>
+<div class="mob-drawer" id="mobDrawer">
+
+  <!-- Header du drawer -->
+  <div class="mob-drawer-hd">
+    <div class="mob-drawer-logo" onclick="go('home');closeMob();">Sport<span class="logo-pi">'Pi</span></div>
+    <button class="mob-close" onclick="closeMob()">✕</button>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="mob-nav">
+
+    <!-- Accueil -->
+    <button class="mob-item" id="mnv-home" onclick="go('home');closeMob();">
+      <span><span class="mob-item-ico">🏠</span>Accueil</span>
+    </button>
+
+    <!-- Sports été (accordéon) -->
+    <button class="mob-item" onclick="toggleSub('msub-ete',this)">
+      <span><span class="mob-item-ico">☀️</span>Sports été</span>
+      <span class="mob-chevron" id="chev-ete">▾</span>
+    </button>
+    <div class="mob-sub" id="msub-ete">
+      <button class="mob-sub-item" onclick="go('football');closeMob();"><span class="mob-sub-item-ico">⚽</span>Football</button>
+      <button class="mob-sub-sub" onclick="go('football');closeMob();">♂ Masculin</button>
+      <button class="mob-sub-sub" onclick="go('football-f');closeMob();">♀ Féminin</button>
+      <button class="mob-sub-item" onclick="go('futsal');closeMob();"><span class="mob-sub-item-ico">🏟️</span>Futsal</button>
+      <button class="mob-sub-sub" onclick="go('futsal');closeMob();">♂ Masculin</button>
+      <button class="mob-sub-sub" onclick="go('futsal-f');closeMob();">♀ Féminin</button>
+      <button class="mob-sub-item" onclick="go('handball');closeMob();"><span class="mob-sub-item-ico">🤾</span>Handball</button>
+      <button class="mob-sub-item" onclick="go('volleyball');closeMob();"><span class="mob-sub-item-ico">🏐</span>Volley-ball</button>
+      <button class="mob-sub-sub" onclick="go('volleyball');closeMob();">♂ Masculin</button>
+      <button class="mob-sub-sub" onclick="go('volleyball-f');closeMob();">♀ Féminin</button>
+      <hr class="mob-sep">
+      <button class="mob-sub-item" onclick="go('athletisme');closeMob();"><span class="mob-sub-item-ico">🏃</span>Athlétisme</button>
+      <button class="mob-sub-item" onclick="go('cyclisme');closeMob();"><span class="mob-sub-item-ico">🚴</span>Cyclisme</button>
+      <button class="mob-sub-item" onclick="go('natation');closeMob();"><span class="mob-sub-item-ico">🏊</span>Natation</button>
+      <button class="mob-sub-item" onclick="go('judo');closeMob();"><span class="mob-sub-item-ico">🥋</span>Judo</button>
+    </div>
+
+    <!-- Sports hiver (accordéon) -->
+    <button class="mob-item" onclick="toggleSub('msub-hiver',this)">
+      <span><span class="mob-item-ico">❄️</span>Sports hiver</span>
+      <span class="mob-chevron" id="chev-hiver">▾</span>
+    </button>
+    <div class="mob-sub" id="msub-hiver">
+      <button class="mob-sub-item" onclick="go('ski-alpin');closeMob();"><span class="mob-sub-item-ico">⛷️</span>Ski alpin</button>
+      <button class="mob-sub-item" onclick="go('ski-nordique');closeMob();"><span class="mob-sub-item-ico">🎿</span>Ski nordique</button>
+      <button class="mob-sub-item" onclick="go('snowboard');closeMob();"><span class="mob-sub-item-ico">🏂</span>Snowboard</button>
+    </div>
+
+    <hr class="mob-sep">
+
+    <!-- Liens directs -->
+    <button class="mob-item" id="mnv-edf" onclick="go('equipes-france');closeMob();">
+      <span><span class="mob-item-ico">🇫🇷</span>Équipes de France</span>
+    </button>
+    <button class="mob-item" id="mnv-deaf" onclick="go('deaflympics');closeMob();">
+      <span><span class="mob-item-ico">🌍</span>Deaflympics</span>
+    </button>
+    <button class="mob-item">
+      <span><span class="mob-item-ico">ℹ️</span>À propos</span>
+    </button>
+
+  </nav>
+
+  <!-- Footer drawer -->
+  <div class="mob-drawer-ft">
+    <button class="btn-sub">Se connecter à Sport'Pi</button>
+  </div>
+</div>
 
 <!-- ===================== PAGE : ACCUEIL ===================== -->
 <div id="page-home" class="page on">
@@ -518,7 +655,7 @@
   </div>
 
   <!-- PROCHAINES COMPÉTITIONS -->
-  <div class="strip">
+  <div class="strip strip-light">
     <div class="sec">
       <div class="sec-hd">
         <h2 class="sec-ttl">Prochaines <span>compétitions</span></h2>
@@ -565,6 +702,53 @@
         <p style="color:var(--txt2);max-width:520px;line-height:1.7;">Football, futsal, handball, athlétisme, cyclisme... Retrouvez l'actualité complète de toutes les équipes nationales sourdes — résultats, calendriers et portraits d'athlètes.</p>
       </div>
       <button class="btn-p" style="padding:14px 28px;font-size:15px;white-space:nowrap;" onclick="go('equipes-france')">Voir les équipes →</button>
+    </div>
+  </div>
+
+  <!-- À PROPOS -->
+  <div class="strip-light" style="border-top:1px solid #e8e8e8;border-bottom:none;">
+    <div class="sec">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+        <!-- Texte -->
+        <div>
+          <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,71,238,.08);border:1px solid rgba(0,71,238,.2);color:var(--blue);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:20px;">À propos du projet</div>
+          <h2 style="font-size:clamp(26px,3.5vw,40px);font-weight:700;letter-spacing:-.5px;line-height:1.15;color:#0a1633;margin-bottom:16px;">Sport'Pi, le média <span style="color:var(--blue);">pour et par</span> la communauté sourde</h2>
+          <p style="font-size:16px;color:#475569;line-height:1.8;margin-bottom:16px;">Sport'Pi est né d'un constat simple : le sport sourd en France manque de visibilité médiatique. Les athlètes sourds et malentendants performent au plus haut niveau — Deaflympics, DCL, championnats du monde — sans bénéficier de la couverture qu'ils méritent.</p>
+          <p style="font-size:16px;color:#475569;line-height:1.8;margin-bottom:24px;">Notre mission : créer le premier média de référence dédié exclusivement au sport sourd en France, avec des contenus accessibles — vidéos sous-titrées, interprétation en LSF — pensés <em>pour</em> la communauté sourde et malentendante, mais ouverts à tous.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;color:#1e293b;">🤟 Accessibilité LSF</div>
+            <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;color:#1e293b;">📺 Vidéos sous-titrées</div>
+            <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 16px;font-size:13px;font-weight:600;color:#1e293b;">🌍 Couverture internationale</div>
+          </div>
+        </div>
+        <!-- Chiffres clés -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+            <div style="font-size:38px;font-weight:700;font-family:var(--fm);color:var(--blue);margin-bottom:6px;">7M</div>
+            <div style="font-size:13px;color:#64748b;line-height:1.4;">Personnes sourdes ou malentendantes en France</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+            <div style="font-size:38px;font-weight:700;font-family:var(--fm);color:var(--blue);margin-bottom:6px;">0</div>
+            <div style="font-size:13px;color:#64748b;line-height:1.4;">Médias spécialisés sport sourd en France avant Sport'Pi</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+            <div style="font-size:38px;font-weight:700;font-family:var(--fm);color:var(--accent);margin-bottom:6px;">21</div>
+            <div style="font-size:13px;color:#64748b;line-height:1.4;">Disciplines sportives sourdes reconnues aux Deaflympics</div>
+          </div>
+          <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
+            <div style="font-size:38px;font-weight:700;font-family:var(--fm);color:var(--accent);margin-bottom:6px;">100%</div>
+            <div style="font-size:13px;color:#64748b;line-height:1.4;">Des contenus accessibles en sous-titres &amp; LSF</div>
+          </div>
+        </div>
+      </div>
+      <!-- Citation fondatrice -->
+      <div style="margin-top:48px;background:linear-gradient(135deg,var(--blue),#0035BB);border-radius:14px;padding:36px 40px;display:flex;gap:24px;align-items:center;">
+        <div style="font-size:64px;line-height:1;opacity:.6;font-family:Georgia,serif;color:#fff;flex-shrink:0;">"</div>
+        <div>
+          <p style="font-size:18px;color:#fff;line-height:1.7;font-weight:500;margin-bottom:12px;">Le sport sourd n'est pas un sport de second rang. C'est une culture, une identité, une fierté. Sport'Pi est là pour lui donner la place qu'il mérite.</p>
+          <div style="font-size:13px;color:rgba(255,255,255,.7);font-weight:600;">— L'équipe Sport'Pi · <span style="color:rgba(255,255,255,.5);">Le média du sport sourd en France</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1593,6 +1777,40 @@
 </footer>
 
 <script>
+  // ===== MOBILE MENU =====
+  function toggleMob() {
+    const btn = document.getElementById('mobBtn');
+    const drawer = document.getElementById('mobDrawer');
+    const overlay = document.getElementById('mobOverlay');
+    const isOpen = drawer.classList.contains('open');
+    if(isOpen) { closeMob(); } else {
+      btn.classList.add('open');
+      drawer.classList.add('open');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  function closeMob() {
+    document.getElementById('mobBtn').classList.remove('open');
+    document.getElementById('mobDrawer').classList.remove('open');
+    document.getElementById('mobOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function toggleSub(id, btn) {
+    const sub = document.getElementById(id);
+    const chev = btn.querySelector('.mob-chevron');
+    const isOpen = sub.classList.contains('open');
+    // ferme tous les autres
+    document.querySelectorAll('.mob-sub').forEach(s => s.classList.remove('open'));
+    document.querySelectorAll('.mob-chevron').forEach(c => c.classList.remove('open'));
+    if(!isOpen) {
+      sub.classList.add('open');
+      if(chev) chev.classList.add('open');
+    }
+  }
+  // ferme le drawer si on appuie sur Échap
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMob(); });
+
   // ===== HANDBALL TABS =====
   function showHbTab(idx, btn) {
     document.querySelectorAll('.hb-tab').forEach(t => t.style.display = 'none');
@@ -1620,8 +1838,13 @@
       tgt.classList.add('fi');
       window.scrollTo({top:0,behavior:'smooth'});
     }
+    // desktop nav
     document.querySelectorAll('.nl').forEach(l => l.classList.remove('on'));
     if(NAV_MAP[id]) { const n = document.getElementById(NAV_MAP[id]); if(n) n.classList.add('on'); }
+    // mobile nav
+    document.querySelectorAll('.mob-item').forEach(l => l.classList.remove('on'));
+    const MOB_MAP = {home:'mnv-home','equipes-france':'mnv-edf',deaflympics:'mnv-deaf'};
+    if(MOB_MAP[id]) { const m = document.getElementById(MOB_MAP[id]); if(m) m.classList.add('on'); }
   }
 
   // ===== SPORT TABS =====
