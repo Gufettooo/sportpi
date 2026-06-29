@@ -55,8 +55,10 @@
     .nl{display:flex;align-items:center;gap:4px;padding:8px 13px;font-size:14px;font-weight:500;color:var(--txt2);border-radius:6px;transition:all .2s;cursor:pointer;white-space:nowrap;background:none;border:none;}
     .nl:hover,.nl.on{color:#fff;background:rgba(0,71,238,.14);}
     .nl.on{color:var(--blue-l);}
-    .dd{position:absolute;top:calc(100% + 8px);left:0;background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:8px;min-width:200px;display:none;z-index:200;box-shadow:0 20px 40px rgba(0,0,0,.45);}
-    .ni:hover .dd{display:block;}
+    /* Dropdown — transition opacity au lieu de display:none pour éviter la fermeture abrupte */
+    .ni{position:relative;padding-bottom:10px;margin-bottom:-10px;} /* bridge hover gap */
+    .dd{position:absolute;top:calc(100% + 2px);left:0;background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:8px;min-width:200px;max-height:80vh;overflow-y:auto;opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .18s ease,visibility .18s ease,transform .18s ease;z-index:200;box-shadow:0 20px 40px rgba(0,0,0,.45);pointer-events:none;}
+    .ni:hover .dd{opacity:1;visibility:visible;transform:translateY(0);pointer-events:all;}
     .ddi{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px;color:var(--txt2);border-radius:6px;cursor:pointer;transition:all .2s;}
     .ddi:hover{background:rgba(0,71,238,.22);color:#fff;}
     .ddi-ico{font-size:17px;}
@@ -64,6 +66,10 @@
     .ddi-sub{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 38px;font-size:12px;color:var(--txt3);border-radius:6px;cursor:pointer;transition:all .2s;}
     .ddi-sub:hover{background:rgba(0,71,238,.15);color:var(--txt2);}
     .ddi-sep{border:none;border-top:1px solid var(--brd);margin:4px 0;}
+    /* Mega-menu Sports été : 2 colonnes */
+    .dd-mega{min-width:420px;display:grid;grid-template-columns:1fr 1fr;gap:0;}
+    .dd-mega-col{padding:4px 0;}
+    .dd-mega-head{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);padding:8px 12px 4px;}
     .nav-r{display:flex;align-items:center;gap:8px;margin-left:auto;}
     .btn-srch{background:none;border:none;color:var(--txt2);padding:8px;border-radius:6px;line-height:1;transition:all .2s;display:flex;align-items:center;justify-content:center;}
     .btn-srch:hover{color:#fff;background:rgba(255,255,255,.1);}
@@ -415,27 +421,30 @@
     <div class="logo" onclick="go('home')">Sport<span class="logo-pi">'Pi</span></div>
     <div class="nav-links">
       <div class="ni"><button class="nl on" id="nv-home" onclick="go('home')">Accueil</button></div>
+      <div class="ni"><button class="nl" id="nv-actu" onclick="go('actualites')">Actualités</button></div>
       <div class="ni">
         <button class="nl" id="nv-sports">Sports été ▾</button>
-        <div class="dd">
-          <div class="ddi" onclick="go('football')"><span class="ddi-ico">⚽</span>Football</div>
-          <div class="ddi-sub" onclick="go('football')">♂ Masculin</div>
-          <div class="ddi-sub" onclick="go('football-f')">♀ Féminin</div>
-          <hr class="ddi-sep">
-          <div class="ddi" onclick="go('futsal')"><span class="ddi-ico">🏟️</span>Futsal</div>
-          <div class="ddi-sub" onclick="go('futsal')">♂ Masculin</div>
-          <div class="ddi-sub" onclick="go('futsal-f')">♀ Féminin</div>
-          <hr class="ddi-sep">
-          <div class="ddi" onclick="go('handball')"><span class="ddi-ico">🤾</span>Handball</div>
-          <hr class="ddi-sep">
-          <div class="ddi" onclick="go('volleyball')"><span class="ddi-ico">🏐</span>Volley-ball</div>
-          <div class="ddi-sub" onclick="go('volleyball')">♂ Masculin</div>
-          <div class="ddi-sub" onclick="go('volleyball-f')">♀ Féminin</div>
-          <hr class="ddi-sep">
-          <div class="ddi" onclick="go('athletisme')"><span class="ddi-ico">🏃</span>Athlétisme</div>
-          <div class="ddi" onclick="go('cyclisme')"><span class="ddi-ico">🚴</span>Cyclisme</div>
-          <div class="ddi" onclick="go('natation')"><span class="ddi-ico">🏊</span>Natation</div>
-          <div class="ddi" onclick="go('judo')"><span class="ddi-ico">🥋</span>Judo</div>
+        <div class="dd dd-mega">
+          <div class="dd-mega-col">
+            <div class="dd-mega-head">Sports collectifs</div>
+            <div class="ddi" onclick="go('football')"><span class="ddi-ico">⚽</span>Football</div>
+            <div class="ddi-sub" onclick="go('football')">♂ Masculin</div>
+            <div class="ddi-sub" onclick="go('football-f')">♀ Féminin</div>
+            <div class="ddi" onclick="go('futsal')"><span class="ddi-ico">🏟️</span>Futsal</div>
+            <div class="ddi-sub" onclick="go('futsal')">♂ Masculin</div>
+            <div class="ddi-sub" onclick="go('futsal-f')">♀ Féminin</div>
+            <div class="ddi" onclick="go('handball')"><span class="ddi-ico">🤾</span>Handball</div>
+            <div class="ddi" onclick="go('volleyball')"><span class="ddi-ico">🏐</span>Volley-ball</div>
+            <div class="ddi-sub" onclick="go('volleyball')">♂ Masculin</div>
+            <div class="ddi-sub" onclick="go('volleyball-f')">♀ Féminin</div>
+          </div>
+          <div class="dd-mega-col" style="border-left:1px solid var(--brd);">
+            <div class="dd-mega-head">Sports individuels</div>
+            <div class="ddi" onclick="go('athletisme')"><span class="ddi-ico">🏃</span>Athlétisme</div>
+            <div class="ddi" onclick="go('cyclisme')"><span class="ddi-ico">🚴</span>Cyclisme</div>
+            <div class="ddi" onclick="go('natation')"><span class="ddi-ico">🏊</span>Natation</div>
+            <div class="ddi" onclick="go('judo')"><span class="ddi-ico">🥋</span>Judo</div>
+          </div>
         </div>
       </div>
       <div class="ni">
@@ -446,13 +455,13 @@
           <div class="ddi" onclick="go('snowboard')"><span class="ddi-ico">🏂</span>Snowboard</div>
         </div>
       </div>
+      <div class="ni"><button class="nl" id="nv-resultats" onclick="go('resultats')">Résultats</button></div>
       <div class="ni"><button class="nl" id="nv-edf" onclick="go('equipes-france')">Équipes de France</button></div>
       <div class="ni"><button class="nl" id="nv-deaf" onclick="go('deaflympics')">Deaflympics</button></div>
-      <div class="ni"><button class="nl">À propos</button></div>
     </div>
     <div class="nav-r">
       <button class="btn-srch" title="Rechercher"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></button>
-      <button class="btn-sub">Se connecter</button>
+      <a href="login.html" class="btn-sub" style="text-decoration:none;display:inline-flex;align-items:center;">Se connecter</a>
       <button class="mob-btn" id="mobBtn" onclick="toggleMob()" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -476,6 +485,11 @@
     <!-- Accueil -->
     <button class="mob-item" id="mnv-home" onclick="go('home');closeMob();">
       <span><span class="mob-item-ico">🏠</span>Accueil</span>
+    </button>
+
+    <!-- Actualités -->
+    <button class="mob-item" id="mnv-actu" onclick="go('actualites');closeMob();">
+      <span><span class="mob-item-ico">📰</span>Actualités</span>
     </button>
 
     <!-- Sports été (accordéon) -->
@@ -515,6 +529,9 @@
     <hr class="mob-sep">
 
     <!-- Liens directs -->
+    <button class="mob-item" id="mnv-resultats" onclick="go('resultats');closeMob();">
+      <span><span class="mob-item-ico">🏆</span>Résultats</span>
+    </button>
     <button class="mob-item" id="mnv-edf" onclick="go('equipes-france');closeMob();">
       <span><span class="mob-item-ico">🇫🇷</span>Équipes de France</span>
     </button>
@@ -529,7 +546,7 @@
 
   <!-- Footer drawer -->
   <div class="mob-drawer-ft">
-    <button class="btn-sub">Se connecter à Sport'Pi</button>
+    <a href="login.html" class="btn-sub" style="text-decoration:none;display:block;text-align:center;padding:12px;font-size:14px;border-radius:8px;">Se connecter à Sport'Pi</a>
   </div>
 </div>
 
@@ -749,6 +766,326 @@
           <div style="font-size:13px;color:rgba(255,255,255,.7);font-weight:600;">— L'équipe Sport'Pi · <span style="color:rgba(255,255,255,.5);">Le média du sport sourd en France</span></div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : ACTUALITÉS ===================== -->
+<div id="page-actualites" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">📰 Média</div>
+      <h1 class="pttl">Actualités</h1>
+      <p class="psub">Toutes les dernières infos du sport sourd — résultats, interviews, analyses et portraits d'athlètes.</p>
+    </div>
+  </div>
+
+  <!-- FILTRES -->
+  <div style="background:var(--bg2);border-bottom:1px solid var(--brd);overflow-x:auto;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;gap:4px;align-items:center;min-height:52px;">
+      <button class="spt on" onclick="filterActu('tous',this)">Tous</button>
+      <button class="spt" onclick="filterActu('football',this)">⚽ Football</button>
+      <button class="spt" onclick="filterActu('futsal',this)">🏟️ Futsal</button>
+      <button class="spt" onclick="filterActu('handball',this)">🤾 Handball</button>
+      <button class="spt" onclick="filterActu('deaflympics',this)">🌍 Deaflympics</button>
+      <button class="spt" onclick="filterActu('athletisme',this)">🏃 Athlétisme</button>
+      <button class="spt" onclick="filterActu('hiver',this)">❄️ Sports d'hiver</button>
+    </div>
+  </div>
+
+  <div class="sec">
+    <!-- ARTICLE À LA UNE -->
+    <div class="sec-hd"><h2 class="sec-ttl">À la <span>une</span></h2></div>
+    <div class="ac feat" onclick="go('article-dcl')" style="margin-bottom:32px;max-width:100%;display:flex;" data-cat="football">
+      <div class="ath" style="width:50%;min-height:260px;">
+        <div class="athi" style="background:linear-gradient(135deg,#001A5A,#000D30);">
+          <span class="athi-ico">⚽</span><div class="ath-ov"></div>
+        </div>
+        <div class="ath-badge">À la une</div>
+      </div>
+      <div class="ab">
+        <div class="acat">DCL Football · Reims 2025</div>
+        <div class="att" style="font-size:22px;">CSS Reims fait l'histoire : premier club organisateur sacré champion d'Europe en DCL</div>
+        <div class="aex">En remportant la 16e DCL à domicile face au POK Athènes (2-1), le CSS Reims entre dans la légende. Les jumeaux Recober et Kodaï Hayashi en vedette d'une semaine historique pour le football sourd français.</div>
+        <div style="margin-bottom:14px;">
+          <div class="vp" style="height:90px;aspect-ratio:auto;"><div class="play" style="width:36px;height:36px;font-size:14px;">▶</div><div class="vcap" style="font-size:11px;">Résumé finale · CSS Reims 2-1 POK Athènes</div></div>
+        </div>
+        <div class="ameta"><span>📅 1 juin 2025</span><span>⏱ 5 min</span><span>👁 12 400</span></div>
+      </div>
+    </div>
+
+    <!-- GRILLE ARTICLES -->
+    <div class="sec-hd"><h2 class="sec-ttl">Dernières <span>publications</span></h2></div>
+    <div class="ag" id="actu-grid">
+      <div class="ac" onclick="go('article-deaflympics')" data-cat="deaflympics">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001A5A,#001230);"><span class="athi-ico">🏅</span><div class="ath-ov"></div></div><div class="ath-badge" style="background:#FFD700;color:#000;">9 médailles</div></div>
+        <div class="ab">
+          <div class="acat">Deaflympics 2025 · Tokyo</div>
+          <div class="att">Paméra Losange, reine de Tokyo : double championne Deaflympics 2025</div>
+          <div class="aex">Le doublé 100m-200m qui entre dans l'histoire du sprint sourd français.</div>
+          <div class="ameta"><span>📅 27 nov. 2025</span><span>⏱ 4 min</span></div>
+        </div>
+      </div>
+      <div class="ac" data-cat="handball">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001230,#001A5A);"><span class="athi-ico">🤾</span><div class="ath-ov"></div></div><div class="ath-badge">Coupe de France</div></div>
+        <div class="ab">
+          <div class="acat">Handball Sourd · Coupe de France</div>
+          <div class="att">CAPO Limoges remporte la Coupe de France HandSourd 2025 à l'Accor Arena</div>
+          <div class="aex">34-28 face à l'AS Tolosa. Une première historique pour le club limougeaud devant 3 000 spectateurs à Paris-Bercy.</div>
+          <div class="ameta"><span>📅 24 mai 2025</span><span>⏱ 3 min</span></div>
+        </div>
+      </div>
+      <div class="ac" onclick="go('futsal')" data-cat="futsal">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001430,#001A5A);"><span class="athi-ico">🏟️</span><div class="ath-ov"></div></div><div class="ath-badge" style="background:var(--blue);">DCL Futsal 2026</div></div>
+        <div class="ab">
+          <div class="acat">Futsal · Montesilvano 2026</div>
+          <div class="att">Montesilvano (Italie) accueillera la DCL Futsal 2026</div>
+          <div class="aex">La ville italienne prépare l'élite européenne du futsal sourd. Inscriptions ouvertes pour les clubs nationaux.</div>
+          <div class="ameta"><span>📅 4 mai 2026</span><span>⏱ 2 min</span></div>
+        </div>
+      </div>
+      <div class="ac" onclick="go('ski-alpin')" data-cat="hiver">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001230,#00236E);"><span class="athi-ico">⛷️</span><div class="ath-ov"></div></div><div class="ath-badge" style="background:#FFD700;color:#000;">🥇 Or</div></div>
+        <div class="ab">
+          <div class="acat">Ski Alpin · Deaflympics 2024</div>
+          <div class="att">Nicolas Sarremejane : l'or en Super-G à Erzurum, une surprise qui fait l'histoire</div>
+          <div class="aex">Porte-drapeau de la délégation française, Sarremejane décroche le titre suprême sur les pentes turques. Un sacre inattendu et mérité.</div>
+          <div class="ameta"><span>📅 5 mars 2024</span><span>⏱ 3 min</span></div>
+        </div>
+      </div>
+      <div class="ac" onclick="go('handball')" data-cat="handball">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001A5A,#001230);"><span class="athi-ico">🤾</span><div class="ath-ov"></div></div></div>
+        <div class="ab">
+          <div class="acat">Handball Sourd · Challenge National</div>
+          <div class="att">Challenge de France HandSourd 2025-26 : sept clubs en lice, CAPO Limoges favori</div>
+          <div class="aex">La nouvelle saison du Challenge de France démarre avec les sept clubs historiques du handball sourd national.</div>
+          <div class="ameta"><span>📅 10 sept. 2025</span><span>⏱ 2 min</span></div>
+        </div>
+      </div>
+      <div class="ac" onclick="go('athletisme')" data-cat="athletisme">
+        <div class="ath"><div class="athi" style="background:linear-gradient(135deg,#001A5A,#001230);"><span class="athi-ico">🏃</span><div class="ath-ov"></div></div><div class="ath-badge" style="background:#FFD700;color:#000;">Tokyo 2025</div></div>
+        <div class="ab">
+          <div class="acat">Athlétisme · Deaflympics 2025</div>
+          <div class="att">France, 3e nation mondiale : comment l'athlétisme sourd a tout changé à Tokyo</div>
+          <div class="aex">Analyse de la performance historique de la délégation française aux 25e Deaflympics d'été, dominée par Paméra Losange.</div>
+          <div class="ameta"><span>📅 28 nov. 2025</span><span>⏱ 6 min</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOAD MORE -->
+    <div style="text-align:center;margin-top:32px;">
+      <button class="btn-s" style="padding:12px 32px;">Charger plus d'articles</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PAGE : RÉSULTATS ===================== -->
+<div id="page-resultats" class="page">
+  <div class="phero">
+    <div class="phero-c">
+      <div class="ptag">🏆 Compétitions</div>
+      <h1 class="pttl">Résultats & Calendrier</h1>
+      <p class="psub">Tous les scores passés et les prochains matchs du sport sourd — DCL, Deaflympics, Challenge national et Coupe de France.</p>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="spnav">
+    <div class="sptabs">
+      <button class="spt on" onclick="showResTab(0,this)">📋 Résultats passés</button>
+      <button class="spt" onclick="showResTab(1,this)">📅 Calendrier à venir</button>
+    </div>
+  </div>
+
+  <!-- FILTRE COMPÉTITION -->
+  <div style="background:var(--bg2);border-bottom:1px solid var(--brd);overflow-x:auto;">
+    <div style="max-width:1280px;margin:0 auto;padding:0 24px;display:flex;gap:4px;align-items:center;min-height:48px;">
+      <button class="spt on" style="font-size:12px;padding:10px 14px;">Toutes</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">DCL Football</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">DCL Futsal</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">Deaflympics</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">Challenge HB</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">Coupe de France</button>
+      <button class="spt" style="font-size:12px;padding:10px 14px;">Ski alpin</button>
+    </div>
+  </div>
+
+  <!-- TAB 0 : RÉSULTATS PASSÉS -->
+  <div id="rest-0">
+    <div class="sec">
+
+      <!-- GROUPE : MAI-JUIN 2025 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">Juin 2025</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <!-- Match -->
+          <div onclick="go('article-dcl')" style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--brd2)'" onmouseout="this.style.borderColor='var(--brd)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">DCL Football · Finale</div><div style="font-size:11px;color:var(--txt3);">31 mai 2025 · Reims</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇫🇷 CSS Reims</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:16px;color:#fff;min-width:70px;text-align:center;">2 — 1</div>
+              <span style="font-size:14px;font-weight:600;">🇬🇷 POK Athènes</span>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUPE : MAI 2025 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">Mai 2025</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div onclick="go('handball')" style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--brd2)'" onmouseout="this.style.borderColor='var(--brd)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">Coupe de France HB · Finale</div><div style="font-size:11px;color:var(--txt3);">24 mai 2025 · Accor Arena</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🏙️ CAPO Limoges</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:16px;color:#fff;min-width:70px;text-align:center;">34 — 28</div>
+              <span style="font-size:14px;font-weight:600;">🏙️ AS Tolosa</span>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUPE : NOVEMBRE 2025 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">Novembre 2025 · Deaflympics Tokyo</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">Handball · 3e place</div><div style="font-size:11px;color:var(--txt3);">25 nov. 2025 · Tokyo</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇭🇷 Croatie</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:16px;color:#fff;min-width:70px;text-align:center;">38 — 30</div>
+              <span style="font-size:14px;font-weight:600;">🇫🇷 France 🥉</span>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#FFD700;margin-bottom:3px;">100m Femmes · 🥇</div><div style="font-size:11px;color:var(--txt3);">17 nov. 2025 · Tokyo</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:700;color:#FFD700;">🇫🇷 Paméra Losange</span>
+              <div style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:14px;color:#FFD700;white-space:nowrap;">1re place 🥇</div>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#FFD700;margin-bottom:3px;">200m Femmes · 🥇</div><div style="font-size:11px;color:var(--txt3);">19 nov. 2025 · Tokyo</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:700;color:#FFD700;">🇫🇷 Paméra Losange</span>
+              <div style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:14px;color:#FFD700;white-space:nowrap;">1re place 🥇</div>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUPE : MARS 2024 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">Mars 2024 · Deaflympics Hiver · Erzurum</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div onclick="go('ski-alpin')" style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--brd2)'" onmouseout="this.style.borderColor='var(--brd)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#FFD700;margin-bottom:3px;">Ski Alpin · Super-G 🥇</div><div style="font-size:11px;color:var(--txt3);">4 mars 2024 · Erzurum</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:700;color:#FFD700;">🇫🇷 Nicolas Sarremejane</span>
+              <div style="background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:14px;color:#FFD700;white-space:nowrap;">1re place 🥇</div>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+          <div onclick="go('ski-alpin')" style="background:var(--bg3);border:1px solid var(--brd);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--brd2)'" onmouseout="this.style.borderColor='var(--brd)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#CD7F32;margin-bottom:3px;">Ski Alpin · Super-G 🥉</div><div style="font-size:11px;color:var(--txt3);">4 mars 2024 · Erzurum</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇫🇷 Thomas Luxcey</span>
+              <div style="background:rgba(205,127,50,.12);border:1px solid rgba(205,127,50,.3);border-radius:6px;padding:4px 12px;font-family:var(--fm);font-weight:700;font-size:14px;color:#CD7F32;white-space:nowrap;">3e place 🥉</div>
+            </div>
+            <span class="badge b-fin">Terminé</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TAB 1 : CALENDRIER -->
+  <div id="rest-1" style="display:none;">
+    <div class="sec">
+
+      <!-- GROUPE : ÉTÉ 2026 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">Été 2026</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div onclick="go('football')" style="background:var(--bg3);border:1px solid rgba(0,71,238,.4);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(0,71,238,.4)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">DCL Football 2026</div><div style="font-size:11px;color:var(--txt3);">Été 2026 · Manisa 🇹🇷</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇫🇷 CSS Reims</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 14px;font-size:13px;color:var(--txt2);font-weight:600;">vs challengers</div>
+            </div>
+            <span class="badge b-up">À venir</span>
+          </div>
+          <div onclick="go('futsal')" style="background:var(--bg3);border:1px solid rgba(0,71,238,.4);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(0,71,238,.4)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">DCL Futsal 2026</div><div style="font-size:11px;color:var(--txt3);">2026 · Montesilvano 🇮🇹</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇪🇺 Clubs européens</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 14px;font-size:13px;color:var(--txt2);font-weight:600;">Phase de groupes</div>
+            </div>
+            <span class="badge b-up">À venir</span>
+          </div>
+          <div onclick="go('futsal')" style="background:var(--bg3);border:1px solid rgba(0,71,238,.4);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(0,71,238,.4)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">DCL Futsal U21 2026</div><div style="font-size:11px;color:var(--txt3);">2026 · Castelnovo ne' Monti 🇮🇹</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇪🇺 U21 Europe</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 14px;font-size:13px;color:var(--txt2);font-weight:600;">Phase de groupes</div>
+            </div>
+            <span class="badge b-up">À venir</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- GROUPE : 2027 -->
+      <div style="margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="font-size:13px;font-weight:700;color:var(--txt3);letter-spacing:1px;text-transform:uppercase;">2027</div>
+          <div style="flex:1;border-top:1px solid var(--brd);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div onclick="go('ski-alpin')" style="background:var(--bg3);border:1px solid rgba(0,71,238,.4);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(0,71,238,.4)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">Deaflympics Hiver</div><div style="font-size:11px;color:var(--txt3);">Janvier 2027 · Innsbruck 🇦🇹</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇫🇷 Délégation France</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 14px;font-size:13px;color:var(--txt2);font-weight:600;">Ski, Snowboard…</div>
+            </div>
+            <span class="badge b-up">À venir</span>
+          </div>
+          <div onclick="go('futsal')" style="background:var(--bg3);border:1px solid rgba(0,71,238,.4);border-radius:10px;padding:14px 18px;cursor:pointer;transition:all .2s;display:grid;grid-template-columns:140px 1fr auto;gap:16px;align-items:center;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='rgba(0,71,238,.4)'">
+            <div><div style="font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--blue-l);margin-bottom:3px;">DCL Futsal Féminin 2027</div><div style="font-size:11px;color:var(--txt3);">2027 · Guimarães 🇵🇹</div></div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <span style="font-size:14px;font-weight:600;">🇪🇺 Clubs féminins</span>
+              <div style="background:rgba(0,71,238,.15);border:1px solid var(--brd);border-radius:6px;padding:4px 14px;font-size:13px;color:var(--txt2);font-weight:600;">Phase de groupes</div>
+            </div>
+            <span class="badge b-up">À venir</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1823,8 +2160,8 @@
   }
 
   // ===== PAGE NAVIGATION =====
-  const ALL = ['home','article-dcl','article-deaflympics','football','football-f','futsal','futsal-f','handball','volleyball','volleyball-f','athletisme','cyclisme','natation','judo','ski-alpin','ski-nordique','snowboard','equipes-france','deaflympics'];
-  const NAV_MAP = {home:'nv-home','equipes-france':'nv-edf',deaflympics:'nv-deaf',football:'nv-sports','football-f':'nv-sports',futsal:'nv-sports','futsal-f':'nv-sports',handball:'nv-sports',volleyball:'nv-sports','volleyball-f':'nv-sports',athletisme:'nv-sports',cyclisme:'nv-sports',natation:'nv-sports',judo:'nv-sports','ski-alpin':'nv-hiver','ski-nordique':'nv-hiver',snowboard:'nv-hiver'};
+  const ALL = ['home','actualites','resultats','article-dcl','article-deaflympics','football','football-f','futsal','futsal-f','handball','volleyball','volleyball-f','athletisme','cyclisme','natation','judo','ski-alpin','ski-nordique','snowboard','equipes-france','deaflympics'];
+  const NAV_MAP = {home:'nv-home',actualites:'nv-actu',resultats:'nv-resultats','equipes-france':'nv-edf',deaflympics:'nv-deaf',football:'nv-sports','football-f':'nv-sports',futsal:'nv-sports','futsal-f':'nv-sports',handball:'nv-sports',volleyball:'nv-sports','volleyball-f':'nv-sports',athletisme:'nv-sports',cyclisme:'nv-sports',natation:'nv-sports',judo:'nv-sports','ski-alpin':'nv-hiver','ski-nordique':'nv-hiver',snowboard:'nv-hiver'};
 
   function go(id) {
     ALL.forEach(p => {
@@ -1843,8 +2180,32 @@
     if(NAV_MAP[id]) { const n = document.getElementById(NAV_MAP[id]); if(n) n.classList.add('on'); }
     // mobile nav
     document.querySelectorAll('.mob-item').forEach(l => l.classList.remove('on'));
-    const MOB_MAP = {home:'mnv-home','equipes-france':'mnv-edf',deaflympics:'mnv-deaf'};
+    const MOB_MAP = {home:'mnv-home',actualites:'mnv-actu',resultats:'mnv-resultats','equipes-france':'mnv-edf',deaflympics:'mnv-deaf'};
     if(MOB_MAP[id]) { const m = document.getElementById(MOB_MAP[id]); if(m) m.classList.add('on'); }
+  }
+
+  // ===== RÉSULTATS TABS =====
+  function showResTab(idx, btn) {
+    ['rest-0','rest-1'].forEach((id,i) => {
+      const el = document.getElementById(id);
+      if(el) el.style.display = i === idx ? 'block' : 'none';
+    });
+    if(btn) {
+      btn.closest('.sptabs').querySelectorAll('.spt').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+    }
+  }
+
+  // ===== FILTRE ACTUALITÉS =====
+  function filterActu(cat, btn) {
+    document.querySelectorAll('#actu-grid .ac').forEach(card => {
+      const c = card.dataset.cat || '';
+      card.style.display = (cat === 'tous' || c === cat) ? 'flex' : 'none';
+    });
+    if(btn) {
+      btn.closest('div').querySelectorAll('.spt').forEach(x => x.classList.remove('on'));
+      btn.classList.add('on');
+    }
   }
 
   // ===== SPORT TABS =====
