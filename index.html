@@ -379,8 +379,9 @@
       .hero-art-img{height:220px;}
       .sw{display:none;}
       .ag{grid-template-columns:1fr;}
-      .ac.feat{flex-direction:column;}
-      .ac.feat .ath{width:100%;min-height:200px;}
+      .ac.feat{flex-direction:column;grid-column:span 1;}
+      .ac.feat .ath{width:100%;min-height:0;max-height:220px;overflow:hidden;flex-shrink:0;}
+      .ac.feat .ab{flex:0 0 auto;}
       .ug{grid-template-columns:1fr;}
       .tg{grid-template-columns:1fr 1fr;}
       .fmain{grid-template-columns:1fr 1fr;}
@@ -390,11 +391,15 @@
       .btn-sub{display:none;}
       .dstats{grid-template-columns:repeat(2,1fr);}
       .promo{grid-template-columns:1fr;}
+      .about-grid{grid-template-columns:1fr !important;}
+      .about-stats{grid-template-columns:1fr 1fr !important;}
     }
     @media(max-width:600px){
       .tg{grid-template-columns:1fr;}
       .fmain{grid-template-columns:1fr;}
       .medal-grid{grid-template-columns:1fr;}
+      .dstats{grid-template-columns:1fr;}
+      .about-stats{grid-template-columns:1fr !important;}
     }
   </style>
 </head>
@@ -799,7 +804,7 @@
   <!-- À PROPOS -->
   <div class="strip-light" style="border-top:1px solid #e8e8e8;border-bottom:none;">
     <div class="sec">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+      <div class="about-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
         <!-- Texte -->
         <div>
           <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,71,238,.08);border:1px solid rgba(0,71,238,.2);color:var(--blue);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border-radius:4px;margin-bottom:20px;">À propos du projet</div>
@@ -813,7 +818,7 @@
           </div>
         </div>
         <!-- Chiffres clés -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="about-stats" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:24px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);">
             <div style="font-size:38px;font-weight:700;font-family:var(--fm);color:var(--blue);margin-bottom:6px;">7M</div>
             <div style="font-size:13px;color:#64748b;line-height:1.4;">Personnes sourdes ou malentendantes en France</div>
